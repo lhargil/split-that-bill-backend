@@ -31,7 +31,7 @@ namespace SplitThatBill.Backend.API
             services.AddDbContext<SplitThatBillContext>(options =>
             {
                 options.UseMySql(Configuration.GetConnectionString("SplitThatBillDb"),
-                    x => x.MigrationsAssembly("SplitThatBillDb.Backend.Data.Migrations"));
+                    x => x.MigrationsAssembly("SplitThatBill.Backend.Data"));
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

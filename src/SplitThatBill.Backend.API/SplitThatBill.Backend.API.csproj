@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>123</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <OutputPath>..\SplitThatBill.Backend.API\bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
