@@ -7,10 +7,10 @@ using System.Text;
 
 namespace SplitThatBill.Backend.Data
 {
-    public class SplitThatBillContext: DbContext
+    public class SplitThatBillContext : DbContext
     {
         public SplitThatBillContext(DbContextOptions<SplitThatBillContext> options)
-            :base(options)
+            : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
