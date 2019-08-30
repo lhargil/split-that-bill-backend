@@ -48,6 +48,33 @@ namespace SplitThatBill.Backend.Core.Entities
             BillDate = billDate;
         }
 
+        public Bill(string establishmentName, DateTime billDate, List<BillItem> billItems)
+        {
+            EstablishmentName = establishmentName;
+            BillDate = billDate;
+            BillItems = billItems;
+        }
+
+        public void AddBillItem(BillItem billItem)
+        {
+            BillItems.Add(billItem);
+        }
+
+        public void AddBillItem(string description, decimal unitPrice)
+        {
+            BillItems.Add(new BillItem(description, unitPrice));
+        }
+
+        public int RemoveBillItem(int billId)
+        {
+            return RemoveBillItem(item => item.Id == billId);
+        }
+
+        public int RemoveBillItem(Predicate<BillItem> filterExpression)
+        {
+            return BillItems.RemoveAll(filterExpression);
+        }
+
         public void AddExtraCharge(ExtraCharge extraCharge)
         {
             ExtraCharges.Add(extraCharge);
@@ -58,12 +85,20 @@ namespace SplitThatBill.Backend.Core.Entities
             ExtraCharges.Add(new ExtraCharge(description, rate));
         }
 
+        public int RemoveExtraCharge(string description)
+        {
+            return RemoveExtraCharge(extraCharge => extraCharge.Description == description);
+        }
+
+        public int RemoveExtraCharge(Predicate<ExtraCharge> filterExpression)
+        {
+            return ExtraCharges.RemoveAll(filterExpression);
+        }
+
         public decimal GetBillTotal()
         {
             var totalCharges = ExtraCharges.Sum(c => c.Rate);
-
-            var zeroTotal = 0.0M;
-            var totalBillAmountWithoutCharges = BillItems.Aggregate(zeroTotal, (acc, bill) => acc + bill.UnitPrice);
+            var totalBillAmountWithoutCharges = BillItems.Aggregate(0.0M, (acc, bill) => acc + bill.UnitPrice);
             var totalBillAmount = totalBillAmountWithoutCharges + (totalBillAmountWithoutCharges * totalCharges);
 
             return totalBillAmount;
@@ -76,14 +111,28 @@ namespace SplitThatBill.Backend.Core.Entities
     public class BillItem
     {
         public int Id { get; private set; }
-        public string Description { get; private set; }
-        public decimal UnitPrice { get; private set; }
+        public string Description { get; set; }
+        public decimal UnitPrice { get; set; }
         public int BillId { get; private set; }
         public virtual Bill Bill { get; private set; }
         public virtual List<PersonBillItem> PersonBillItems { get; private set; }
         private BillItem()
         {
 
+        }
+
+        public BillItem(string description, decimal unitPrice)
+        {
+            Description = description;
+            UnitPrice = unitPrice;
+        }
+
+        public decimal GetTotalPayablePerItem()
+        {
+            var totalPayable = Bill.ExtraCharges.Aggregate(0.0M, (acc, charge) => {
+                return UnitPrice + (UnitPrice * charge.Rate);
+            });
+            return totalPayable;
         }
     }
 
@@ -121,7 +170,7 @@ namespace SplitThatBill.Backend.Core.Entities
         public string AccountName { get; private set; }
         public int BillId { get; private set; }
         public virtual Bill Bill { get; private set; }
-        public PaymentDetail()
+        private PaymentDetail()
         {
 
         }
