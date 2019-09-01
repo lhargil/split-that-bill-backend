@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
+using SplitThatBill.Backend.API.Options;
 using Microsoft.Extensions.Options;
-using SplitThatBill.Backend.Data;
-using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace SplitThatBill.Backend.API
 {
@@ -28,7 +22,35 @@ namespace SplitThatBill.Backend.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.Configure<NswagOptions>(Configuration.GetSection("NSwag"));
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
+                {
+                    // Use camel case properties in the serializer and the spec (optional)
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    // Use string enums in the serializer and the spec (optional)
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
+
+            services.AddOpenApiDocument((config, sp) =>
+            {
+                var nswagOptions = sp.GetRequiredService<IOptionsMonitor<NswagOptions>>().CurrentValue;
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = nswagOptions.Info.Version;
+                    document.Info.Title = nswagOptions.Info.Title;
+                    document.Info.Description = nswagOptions.Info.Description;
+                    document.Info.TermsOfService = nswagOptions.Info.TermsOfService;
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = nswagOptions.Info.Contact.Name,
+                        Email = nswagOptions.Info.Contact.Email,
+                        Url = nswagOptions.Info.Contact.Url
+                    };
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +68,8 @@ namespace SplitThatBill.Backend.API
 
             app.UseHttpsRedirection();
             app.UseMvc();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
     }
 }

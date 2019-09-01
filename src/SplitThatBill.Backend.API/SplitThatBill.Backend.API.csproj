@@ -14,11 +14,15 @@
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="2.2.0" />
+    <PackageReference Include="nswag.aspnetcore" Version="13.0.6" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />
     <ProjectReference Include="..\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Options\" />
   </ItemGroup>
 </Project>
