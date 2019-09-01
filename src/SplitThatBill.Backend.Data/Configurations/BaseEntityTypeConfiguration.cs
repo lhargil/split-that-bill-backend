@@ -15,13 +15,11 @@ namespace SplitThatBill.Backend.Data.Configurations
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.Property<DateTime>("DateCreated")
-                .IsRequired()
                 .ValueGeneratedOnAdd()
-                .HasDefaultValueSql("SYSUTCDATETIME()");
+                .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
             builder.Property<DateTime>("DateModified")
-                .IsRequired()
-                .ValueGeneratedOnAdd()
-                .HasDefaultValueSql("SYSUTCDATETIME()");
+                .ValueGeneratedOnAddOrUpdate()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
             builder.Property<Boolean>("IsDeleted")
                 .IsRequired()
                 .HasDefaultValue(false);
