@@ -46,7 +46,7 @@ namespace SplitThatBill.Backend.Core.Entities
             ExtraCharges = new List<ExtraCharge>();
         }
 
-        public Bill(string establishmentName, DateTime billDate): this()
+        public Bill(string establishmentName, DateTime billDate) : this()
         {
             EstablishmentName = establishmentName;
             BillDate = billDate;
@@ -89,9 +89,9 @@ namespace SplitThatBill.Backend.Core.Entities
             ExtraCharges.Add(new ExtraCharge(description, rate));
         }
 
-        public int RemoveExtraCharge(string description)
+        public int RemoveExtraCharge(int extraChargeId)
         {
-            return RemoveExtraCharge(extraCharge => extraCharge.Description == description);
+            return RemoveExtraCharge(extraCharge => extraCharge.Id == extraChargeId);
         }
 
         public int RemoveExtraCharge(Predicate<ExtraCharge> filterExpression)
@@ -133,7 +133,8 @@ namespace SplitThatBill.Backend.Core.Entities
 
         public decimal GetTotalPayablePerItem()
         {
-            var totalPayable = Bill.ExtraCharges.Aggregate(0.0M, (acc, charge) => {
+            var totalPayable = Bill.ExtraCharges.Aggregate(0.0M, (acc, charge) =>
+            {
                 return UnitPrice + (UnitPrice * charge.Rate);
             });
             return totalPayable;
