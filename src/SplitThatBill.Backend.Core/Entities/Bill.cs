@@ -1,4 +1,5 @@
-﻿using SplitThatBill.Backend.Core.OwnedEntities;
+﻿using SplitThatBill.Backend.Core.Entities;
+using SplitThatBill.Backend.Core.OwnedEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,9 @@ namespace SplitThatBill.Backend.Core.OwnedEntities
 {
     public class ExtraCharge
     {
+        public int Id { get; private set; }
+        public int BillId { get; private set; }
+        public virtual Bill Bill { get; private set; }
         public string Description { get; private set; }
         public decimal Rate { get; private set; }
 
