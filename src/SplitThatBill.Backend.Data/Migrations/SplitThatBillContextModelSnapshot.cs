@@ -50,7 +50,7 @@ namespace SplitThatBill.Backend.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bill");
+                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("SplitThatBill.Backend.Core.Entities.BillItem", b =>

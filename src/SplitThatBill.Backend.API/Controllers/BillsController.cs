@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SplitThatBill.Backend.Core.Interfaces;
+using SplitThatBill.Backend.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,11 +13,21 @@ namespace SplitThatBill.Backend.API.Controllers
     [Route("api/[controller]")]
     public class BillsController : Controller
     {
+        private readonly SplitThatBillContext _splitThatBillContext;
+        private readonly IDateTimeManager _dateTimeManager;
+
+        public BillsController(SplitThatBillContext splitThatBillContext, IDateTimeManager dateTimeManager)
+        {
+            _splitThatBillContext = splitThatBillContext;
+            _dateTimeManager = dateTimeManager;
+        }
         // GET: api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<int>> Get()
         {
-            return new string[] { "bill1", "bill2" };
+            _splitThatBillContext.Bills.Add(new Core.Entities.Bill("name", _dateTimeManager.Today));
+            var saved = await _splitThatBillContext.SaveChangesAsync();
+            return Ok(new { recordsSaved = saved });
         }
 
         // GET api/values/5

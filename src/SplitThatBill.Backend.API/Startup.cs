@@ -5,8 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Converters;
-using SplitThatBill.Backend.API.Options;
 using Microsoft.Extensions.Options;
+using SplitThatBill.Backend.API.Extensions;
+using SplitThatBill.Backend.API.Models;
+using SplitThatBill.Backend.Core.Interfaces;
+using SplitThatBill.Backend.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace SplitThatBill.Backend.API
 {
@@ -23,6 +27,12 @@ namespace SplitThatBill.Backend.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<NswagOptions>(Configuration.GetSection("NSwag"));
+
+            services.AddDbContext<SplitThatBillContext>(options =>
+            {
+                options.UseMySql(Configuration.GetConnectionString("SplitThatBillDb"),
+                    config => config.MigrationsAssembly("SplitThatBill.Backend.Data"));
+            });
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
@@ -51,11 +61,15 @@ namespace SplitThatBill.Backend.API
                     };
                 };
             });
+
+            services.AddScoped<IContextData, RequestContextData>();
+            services.AddTransient<IDateTimeManager, DateTimeManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseRequestContextDataMiddleware();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

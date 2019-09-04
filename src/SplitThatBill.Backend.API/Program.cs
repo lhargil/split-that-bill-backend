@@ -25,7 +25,7 @@ namespace SplitThatBill.Backend.API
                 {
                     var services = scope.ServiceProvider;
                     var context = services.GetService<SplitThatBillContext>();
-
+                    context.Database.EnsureDeleted();
                     context.Database.Migrate();
                 }
                 catch (Exception ex)
@@ -34,7 +34,7 @@ namespace SplitThatBill.Backend.API
                     logger.LogError("An error has occurred while migrating the database.", ex);
                 }
             }
-            
+
 
             host.Run();
         }

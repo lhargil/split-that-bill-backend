@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SplitThatBill.Backend.API.Options
+namespace SplitThatBill.Backend.API.Models
 {
     public class NswagOptions
     {

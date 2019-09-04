@@ -23,6 +23,8 @@
     <ProjectReference Include="..\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Options\" />
+    <Folder Include="Models\" />
+    <Folder Include="Middlewares\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

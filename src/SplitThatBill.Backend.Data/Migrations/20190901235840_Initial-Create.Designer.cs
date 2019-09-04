@@ -9,7 +9,7 @@ using SplitThatBill.Backend.Data;
 namespace SplitThatBill.Backend.Data.Migrations
 {
     [DbContext(typeof(SplitThatBillContext))]
-    [Migration("20190901213557_Initial-Create")]
+    [Migration("20190901235840_Initial-Create")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace SplitThatBill.Backend.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Bill");
+                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("SplitThatBill.Backend.Core.Entities.BillItem", b =>

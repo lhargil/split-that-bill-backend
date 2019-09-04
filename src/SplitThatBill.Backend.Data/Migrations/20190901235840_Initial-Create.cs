@@ -9,7 +9,7 @@ namespace SplitThatBill.Backend.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Bill",
+                name: "Bills",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -26,7 +26,7 @@ namespace SplitThatBill.Backend.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bill", x => x.Id);
+                    table.PrimaryKey("PK_Bills", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,9 +63,9 @@ namespace SplitThatBill.Backend.Data.Migrations
                 {
                     table.PrimaryKey("PK_BillItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BillItem_Bill_BillId",
+                        name: "FK_BillItem_Bills_BillId",
                         column: x => x.BillId,
-                        principalTable: "Bill",
+                        principalTable: "Bills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -83,9 +83,9 @@ namespace SplitThatBill.Backend.Data.Migrations
                 {
                     table.PrimaryKey("PK_ExtraCharge", x => new { x.BillId, x.Id });
                     table.ForeignKey(
-                        name: "FK_ExtraCharge_Bill_BillId",
+                        name: "FK_ExtraCharge_Bills_BillId",
                         column: x => x.BillId,
-                        principalTable: "Bill",
+                        principalTable: "Bills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -105,9 +105,9 @@ namespace SplitThatBill.Backend.Data.Migrations
                 {
                     table.PrimaryKey("PK_PaymentDetail", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PaymentDetail_Bill_BillId",
+                        name: "FK_PaymentDetail_Bills_BillId",
                         column: x => x.BillId,
-                        principalTable: "Bill",
+                        principalTable: "Bills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -177,7 +177,7 @@ namespace SplitThatBill.Backend.Data.Migrations
                 name: "Person");
 
             migrationBuilder.DropTable(
-                name: "Bill");
+                name: "Bills");
         }
     }
 }
