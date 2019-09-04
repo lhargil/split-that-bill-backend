@@ -11,6 +11,10 @@ using SplitThatBill.Backend.API.Models;
 using SplitThatBill.Backend.Core.Interfaces;
 using SplitThatBill.Backend.Data;
 using Microsoft.EntityFrameworkCore;
+using MediatR;
+using System.Reflection;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace SplitThatBill.Backend.API
 {
@@ -61,6 +65,14 @@ namespace SplitThatBill.Backend.API
                     };
                 };
             });
+
+            //var assemblies = new List<Assembly>();
+            //Assembly.GetCallingAssembly().GetReferencedAssemblies().AsEnumerable().ToList().ForEach(item =>
+            //{
+            //    assemblies.Add(Assembly.Load(item.Name));
+            //});
+
+            //services.AddMediatR(assemblies.ToArray());
 
             services.AddScoped<IContextData, RequestContextData>();
             services.AddTransient<IDateTimeManager, DateTimeManager>();
