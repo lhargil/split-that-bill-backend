@@ -16,18 +16,15 @@ namespace SplitThatBill.Backend.API.Controllers
         private readonly SplitThatBillContext _splitThatBillContext;
         private readonly IDateTimeManager _dateTimeManager;
 
-        public BillsController(SplitThatBillContext splitThatBillContext, IDateTimeManager dateTimeManager)
+        public BillsController(SplitThatBillContext splitThatBillContext)
         {
             _splitThatBillContext = splitThatBillContext;
-            _dateTimeManager = dateTimeManager;
         }
         // GET: api/values
         [HttpGet]
         public async Task<ActionResult<int>> Get()
         {
-            _splitThatBillContext.Bills.Add(new Core.Entities.Bill("name", _dateTimeManager.Today));
-            var saved = await _splitThatBillContext.SaveChangesAsync();
-            return Ok(new { recordsSaved = saved });
+            return Ok(1);
         }
 
         // GET api/values/5
