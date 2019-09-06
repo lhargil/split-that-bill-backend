@@ -1,52 +1,8 @@
-﻿using SplitThatBill.Backend.Core.Entities;
-using SplitThatBill.Backend.Core.OwnedEntities;
+﻿using SplitThatBill.Backend.Core.OwnedEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-namespace SplitThatBill.Backend.Core.OwnedEntities
-{
-    public class ExtraCharge
-    {
-        public int Id { get; private set; }
-        public int BillId { get; private set; }
-        public Bill Bill { get; private set; }
-        public string Description { get; private set; }
-        public decimal Rate { get; private set; }
-
-        private ExtraCharge()
-        {
-
-        }
-
-        public ExtraCharge(string description, decimal rate)
-        {
-            Description = description;
-            Rate = rate;
-        }
-    }
-
-    public class PaymentDetail
-    {
-        public int Id { get; private set; }
-        public int PersonId { get; private set; }
-        public Person Person { get; set; }
-        public string BankName { get; private set; }
-        public string AccountNumber { get; private set; }
-        public string AccountName { get; private set; }
-        private PaymentDetail()
-        {
-
-        }
-        public PaymentDetail(string bankName, string accountNumber, string accountName)
-        {
-            BankName = bankName;
-            AccountNumber = accountNumber;
-            AccountName = accountName;
-        }
-    }
-}
 
 namespace SplitThatBill.Backend.Core.Entities
 {
@@ -126,73 +82,6 @@ namespace SplitThatBill.Backend.Core.Entities
             var totalBillAmount = totalBillAmountWithoutCharges + (totalBillAmountWithoutCharges * totalCharges);
 
             return totalBillAmount;
-        }
-    }
-
-    /*
-     Quantity is always one. Multiple items in the receipt will be recorded n times where n = quantity in the receipt 
-     */
-    public class BillItem
-    {
-        public int Id { get; private set; }
-        public string Description { get; set; }
-        public decimal UnitPrice { get; set; }
-        public int BillId { get; private set; }
-        public Bill Bill { get; private set; }
-        public List<PersonBillItem> PersonBillItems { get; private set; }
-        private BillItem()
-        {
-
-        }
-
-        public BillItem(string description, decimal unitPrice)
-        {
-            Description = description;
-            UnitPrice = unitPrice;
-        }
-
-        public decimal GetTotalPayablePerItem()
-        {
-            var totalPayable = Bill.ExtraCharges.Aggregate(0.0M, (acc, charge) =>
-            {
-                return UnitPrice + (UnitPrice * charge.Rate);
-            });
-            return totalPayable;
-        }
-    }
-
-    public class Person
-    {
-        public int Id { get; private set; }
-        public string Firstname { get; private set; }
-        public string Lastname { get; private set; }
-        public string Fullname { get => $"{Firstname} {Lastname}"; }
-        public List<PersonBillItem> PersonBillItems { get; private set; }
-        public List<PaymentDetail> PaymentDetails { get; private set; }
-        public Bill Bill { get; private set; }
-        public int BillId { get; private set; }
-        private Person()
-        {
-            PersonBillItems = new List<PersonBillItem>();
-            PaymentDetails = new List<PaymentDetail>();
-        }
-        public Person(string firstname, string lastname)
-        {
-            Firstname = firstname;
-            Lastname = lastname;
-        }
-    }
-
-    public class PersonBillItem
-    {
-        public int PersonId { get; private set; }
-        public Person Person { get; private set; }
-        public int BillItemId { get; private set; }
-        public BillItem BillItem { get; private set; }
-        public decimal PayableUnitPrice { get; set; }
-        private PersonBillItem()
-        {
-
         }
     }
 }
