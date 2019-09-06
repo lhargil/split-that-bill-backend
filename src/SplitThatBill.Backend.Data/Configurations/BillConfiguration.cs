@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SplitThatBill.Backend.Data.Configurations
 {
-    public class BillConfiguration: BaseEntityTypeConfiguration<Bill>
+    public class BillConfiguration : BaseEntityTypeConfiguration<Bill>
     {
         public override void Configure(EntityTypeBuilder<Bill> builder)
         {
@@ -18,8 +18,10 @@ namespace SplitThatBill.Backend.Data.Configurations
                 .IsRequired();
 
             builder
-                .HasMany(p => p.PaymentDetails)
-                .WithOne(p => p.Bill);
+                .HasOne(p => p.BillTaker)
+                .WithOne(p => p.Bill)
+                .HasForeignKey<Person>(p => p.BillId)
+                .IsRequired();
 
             // Owned entities
             builder.OwnsMany(p => p.ExtraCharges, a =>

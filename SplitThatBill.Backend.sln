@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitThatBill.Backend.Core"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitThatBill.Backend.Data", "src\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj", "{465BAF5B-CAB8-4B2E-A9A5-31B3480FB715}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitThatBill.Backend.Business", "src\SplitThatBill.Backend.Business\SplitThatBill.Backend.Business.csproj", "{943BE494-6ABA-4ECD-9192-A5CC2304FA1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{465BAF5B-CAB8-4B2E-A9A5-31B3480FB715}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{465BAF5B-CAB8-4B2E-A9A5-31B3480FB715}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{465BAF5B-CAB8-4B2E-A9A5-31B3480FB715}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943BE494-6ABA-4ECD-9192-A5CC2304FA1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943BE494-6ABA-4ECD-9192-A5CC2304FA1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943BE494-6ABA-4ECD-9192-A5CC2304FA1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943BE494-6ABA-4ECD-9192-A5CC2304FA1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

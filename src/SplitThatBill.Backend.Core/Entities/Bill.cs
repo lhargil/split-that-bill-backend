@@ -26,6 +26,26 @@ namespace SplitThatBill.Backend.Core.OwnedEntities
             Rate = rate;
         }
     }
+
+    public class PaymentDetail
+    {
+        public int Id { get; private set; }
+        public int PersonId { get; private set; }
+        public virtual Person Person { get; set; }
+        public string BankName { get; private set; }
+        public string AccountNumber { get; private set; }
+        public string AccountName { get; private set; }
+        private PaymentDetail()
+        {
+
+        }
+        public PaymentDetail(string bankName, string accountNumber, string accountName)
+        {
+            BankName = bankName;
+            AccountNumber = accountNumber;
+            AccountName = accountName;
+        }
+    }
 }
 
 namespace SplitThatBill.Backend.Core.Entities
@@ -36,26 +56,26 @@ namespace SplitThatBill.Backend.Core.Entities
         public string EstablishmentName { get; private set; }
         public DateTime BillDate { get; private set; }
         public string Remarks { get; set; }
-        public virtual List<BillItem> BillItems { get; private set; }
-        public virtual List<PaymentDetail> PaymentDetails { get; private set; }
+        public List<BillItem> BillItems { get; private set; }
         public virtual List<ExtraCharge> ExtraCharges { get; private set; }
+        public virtual Person BillTaker { get; private set; }
+
         private Bill()
         {
+
             BillItems = new List<BillItem>();
-            PaymentDetails = new List<PaymentDetail>();
             ExtraCharges = new List<ExtraCharge>();
         }
 
-        public Bill(string establishmentName, DateTime billDate) : this()
+        public Bill(string establishmentName, DateTime billDate, Person billTaker) : this()
         {
             EstablishmentName = establishmentName;
             BillDate = billDate;
+            BillTaker = billTaker;
         }
 
-        public Bill(string establishmentName, DateTime billDate, List<BillItem> billItems)
+        public Bill(string establishmentName, DateTime billDate, Person billTaker, List<BillItem> billItems) : this(establishmentName, billDate, billTaker)
         {
-            EstablishmentName = establishmentName;
-            BillDate = billDate;
             BillItems = billItems;
         }
 
@@ -148,9 +168,18 @@ namespace SplitThatBill.Backend.Core.Entities
         public string Lastname { get; private set; }
         public string Fullname { get => $"{Firstname} {Lastname}"; }
         public virtual List<PersonBillItem> PersonBillItems { get; private set; }
+        public virtual List<PaymentDetail> PaymentDetails { get; private set; }
+        public virtual Bill Bill { get; private set; }
+        public int BillId { get; private set; }
         private Person()
         {
             PersonBillItems = new List<PersonBillItem>();
+            PaymentDetails = new List<PaymentDetail>();
+        }
+        public Person(string firstname, string lastname)
+        {
+            Firstname = firstname;
+            Lastname = lastname;
         }
     }
 
@@ -162,20 +191,6 @@ namespace SplitThatBill.Backend.Core.Entities
         public virtual BillItem BillItem { get; private set; }
         public decimal PayableUnitPrice { get; set; }
         private PersonBillItem()
-        {
-
-        }
-    }
-
-    public class PaymentDetail
-    {
-        public int Id { get; private set; }
-        public string BankName { get; private set; }
-        public string AccountNumber { get; private set; }
-        public string AccountName { get; private set; }
-        public int BillId { get; private set; }
-        public virtual Bill Bill { get; private set; }
-        private PaymentDetail()
         {
 
         }

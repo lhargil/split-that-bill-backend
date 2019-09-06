@@ -13,6 +13,14 @@ namespace SplitThatBill.Backend.Data.Configurations
                 .HasMany(p => p.PersonBillItems)
                 .WithOne(p => p.Person)
                 .HasForeignKey(p => p.PersonId);
+
+            builder.OwnsMany(p => p.PaymentDetails, a =>
+            {
+                a.HasForeignKey(p => p.PersonId);
+                a.Property(p => p.Id);
+                a.HasKey(p => new { p.PersonId, p.Id });
+            });
+
             base.Configure(builder);
         }
     }

@@ -30,11 +30,13 @@ namespace SplitThatBill.Backend.Data
             modelBuilder.ApplyConfiguration(new BillConfiguration());
             modelBuilder.ApplyConfiguration(new BillItemConfiguration());
             modelBuilder.ApplyConfiguration(new PersonBillItemConfiguration());
+            modelBuilder.ApplyConfiguration(new PersonConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Bill> Bills { get; set; }
+        public DbSet<Person> People { get; set; }
 
         public override int SaveChanges()
         {
@@ -54,6 +56,7 @@ namespace SplitThatBill.Backend.Data
             {
                 var today = _dateTimeManager.Today;
                 var currentUser = _contextData.CurrentUser;
+
                 entry.Property("DateModified").CurrentValue = today;
                 entry.Property("ModifiedBy").CurrentValue = currentUser;
                 if (entry.State == EntityState.Added)

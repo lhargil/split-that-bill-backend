@@ -91,38 +91,43 @@ namespace SplitThatBill.Backend.Data.Migrations
                     b.ToTable("BillItem");
                 });
 
-            modelBuilder.Entity("SplitThatBill.Backend.Core.Entities.PaymentDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("AccountName");
-
-                    b.Property<string>("AccountNumber");
-
-                    b.Property<string>("BankName");
-
-                    b.Property<int>("BillId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BillId");
-
-                    b.ToTable("PaymentDetail");
-                });
-
             modelBuilder.Entity("SplitThatBill.Backend.Core.Entities.Person", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("BillId");
+
+                    b.Property<string>("CreatedBy");
+
+                    b.Property<DateTime>("DateCreated")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+
+                    b.Property<DateTime>("DateModified")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP(6)");
+
                     b.Property<string>("Firstname");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<string>("Lastname");
 
+                    b.Property<string>("ModifiedBy");
+
+                    b.Property<DateTime?>("Version")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
                     b.HasKey("Id");
 
-                    b.ToTable("Person");
+                    b.HasIndex("BillId")
+                        .IsUnique();
+
+                    b.ToTable("People");
                 });
 
             modelBuilder.Entity("SplitThatBill.Backend.Core.Entities.PersonBillItem", b =>
@@ -191,12 +196,34 @@ namespace SplitThatBill.Backend.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SplitThatBill.Backend.Core.Entities.PaymentDetail", b =>
+            modelBuilder.Entity("SplitThatBill.Backend.Core.Entities.Person", b =>
                 {
                     b.HasOne("SplitThatBill.Backend.Core.Entities.Bill", "Bill")
-                        .WithMany("PaymentDetails")
-                        .HasForeignKey("BillId")
+                        .WithOne("BillTaker")
+                        .HasForeignKey("SplitThatBill.Backend.Core.Entities.Person", "BillId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsMany("SplitThatBill.Backend.Core.OwnedEntities.PaymentDetail", "PaymentDetails", b1 =>
+                        {
+                            b1.Property<int>("PersonId");
+
+                            b1.Property<int>("Id");
+
+                            b1.Property<string>("AccountName");
+
+                            b1.Property<string>("AccountNumber");
+
+                            b1.Property<string>("BankName");
+
+                            b1.HasKey("PersonId", "Id");
+
+                            b1.ToTable("PaymentDetail");
+
+                            b1.HasOne("SplitThatBill.Backend.Core.Entities.Person", "Person")
+                                .WithMany("PaymentDetails")
+                                .HasForeignKey("PersonId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
                 });
 
             modelBuilder.Entity("SplitThatBill.Backend.Core.Entities.PersonBillItem", b =>

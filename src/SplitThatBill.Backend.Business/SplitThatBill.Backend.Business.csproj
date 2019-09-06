@@ -4,4 +4,19 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Class1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="7.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+    <Folder Include="Requests\" />
+    <Folder Include="Handlers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />
+    <ProjectReference Include="..\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj" />
+  </ItemGroup>
 </Project>

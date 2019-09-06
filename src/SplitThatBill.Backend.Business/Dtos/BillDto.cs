@@ -4,7 +4,7 @@ using System.Linq;
 using SplitThatBill.Backend.Core.Entities;
 using SplitThatBill.Backend.Core.ValueObjects;
 
-namespace SplitThatBill.Backend.API.Dtos
+namespace SplitThatBill.Backend.Business.Dtos
 {
     public class BillDto
     {
@@ -17,10 +17,8 @@ namespace SplitThatBill.Backend.API.Dtos
 
         public int Id => _bill.Id;
         public string EstablishmentName => _bill.EstablishmentName;
-        public string BillDate => _bill.BillDate.ToString("MMM dd yyyy");
+        public string BillDate => _bill.BillDate.ToString("MMM d, yyyy");
         public List<BillItemDto> BillItems => _bill.BillItems.Select(item => new BillItemDto(item))
-            .ToList();
-        public List<PaymentDetailDto> PaymentDetails => _bill.PaymentDetails.Select(item => new PaymentDetailDto(item))
             .ToList();
     }
 
@@ -35,18 +33,5 @@ namespace SplitThatBill.Backend.API.Dtos
 
         public string Description => _billItem.Description;
         public Money UnitPrice => new Money(_billItem.UnitPrice);
-    }
-
-    public class PaymentDetailDto
-    {
-        private readonly PaymentDetail _paymentDetail;
-
-        public PaymentDetailDto(PaymentDetail paymentDetail)
-        {
-            _paymentDetail = paymentDetail;
-        }
-        public string BankName => _paymentDetail.BankName;
-        public string AccountNumber => _paymentDetail.AccountNumber;
-        public string AccountName => _paymentDetail.AccountName;
     }
 }

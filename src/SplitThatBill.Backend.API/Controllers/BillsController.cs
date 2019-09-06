@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SplitThatBill.Backend.Business;
 using SplitThatBill.Backend.Business.Dtos;
-using SplitThatBill.Backend.Core.Entities;
-using SplitThatBill.Backend.Core.Interfaces;
-using SplitThatBill.Backend.Data;
+using SplitThatBill.Backend.Business.Requests;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,15 +23,23 @@ namespace SplitThatBill.Backend.API.Controllers
         [HttpGet]
         public async Task<ActionResult<List<BillDto>>> Get()
         {
-            var result = await _mediator.Send(new GetBillRequest());
-            return Ok(result);
+            var bills = await _mediator.Send(new GetBillsRequest());
+            return Ok(bills);
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<BillDto>> Get(int id)
         {
-            return "value";
+            try
+            {
+                var bill = await _mediator.Send(new GetSingleBillRequest(id));
+                return bill;
+            }
+            catch (NullReferenceException nullRefException)
+            {
+                return NotFound(nullRefException.Message);
+            }
         }
 
         // POST api/values
