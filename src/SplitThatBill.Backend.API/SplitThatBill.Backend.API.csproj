@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />
     <ProjectReference Include="..\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj" />
+    <ProjectReference Include="..\SplitThatBill.Backend.Business\SplitThatBill.Backend.Business.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

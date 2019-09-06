@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SplitThatBill.Backend.Core.Interfaces;
 using SplitThatBill.Backend.Data;
 
 namespace SplitThatBill.Backend.API
@@ -24,9 +25,14 @@ namespace SplitThatBill.Backend.API
                 try
                 {
                     var services = scope.ServiceProvider;
-                    var context = services.GetService<SplitThatBillContext>();
-                    context.Database.EnsureDeleted();
-                    context.Database.Migrate();
+                    var splitThatBillContext = services.GetService<SplitThatBillContext>();
+                    splitThatBillContext.Database.EnsureDeleted();
+                    splitThatBillContext.Database.Migrate();
+
+                    var dateTimeManager = services.GetRequiredService<IDateTimeManager>();
+
+                    var dataSeeder = new DataSeeder(splitThatBillContext, dateTimeManager);
+                    dataSeeder.Seed();
                 }
                 catch (Exception ex)
                 {

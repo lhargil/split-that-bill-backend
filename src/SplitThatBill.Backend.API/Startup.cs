@@ -66,13 +66,13 @@ namespace SplitThatBill.Backend.API
                 };
             });
 
-            //var assemblies = new List<Assembly>();
+            var assemblies = new List<Assembly>();
             //Assembly.GetCallingAssembly().GetReferencedAssemblies().AsEnumerable().ToList().ForEach(item =>
             //{
             //    assemblies.Add(Assembly.Load(item.Name));
             //});
-
-            //services.AddMediatR(assemblies.ToArray());
+            assemblies.Add(Assembly.Load("SplitThatBill.Backend.Business"));
+            services.AddMediatR(assemblies.ToArray());
 
             services.AddScoped<IContextData, RequestContextData>();
             services.AddTransient<IDateTimeManager, DateTimeManager>();

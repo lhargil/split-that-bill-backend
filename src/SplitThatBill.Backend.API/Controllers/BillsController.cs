@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using SplitThatBill.Backend.Business;
+using SplitThatBill.Backend.Business.Dtos;
+using SplitThatBill.Backend.Core.Entities;
 using SplitThatBill.Backend.Core.Interfaces;
 using SplitThatBill.Backend.Data;
 
@@ -13,18 +17,18 @@ namespace SplitThatBill.Backend.API.Controllers
     [Route("api/[controller]")]
     public class BillsController : Controller
     {
-        private readonly SplitThatBillContext _splitThatBillContext;
-        private readonly IDateTimeManager _dateTimeManager;
+        private readonly IMediator _mediator;
 
-        public BillsController(SplitThatBillContext splitThatBillContext)
+        public BillsController(IMediator mediator)
         {
-            _splitThatBillContext = splitThatBillContext;
+            _mediator = mediator;
         }
         // GET: api/values
         [HttpGet]
-        public async Task<ActionResult<int>> Get()
+        public async Task<ActionResult<List<BillDto>>> Get()
         {
-            return Ok(1);
+            var result = await _mediator.Send(new GetBillRequest());
+            return Ok(result);
         }
 
         // GET api/values/5
