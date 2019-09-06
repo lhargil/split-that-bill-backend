@@ -11,7 +11,7 @@ namespace SplitThatBill.Backend.Core.OwnedEntities
     {
         public int Id { get; private set; }
         public int BillId { get; private set; }
-        public virtual Bill Bill { get; private set; }
+        public Bill Bill { get; private set; }
         public string Description { get; private set; }
         public decimal Rate { get; private set; }
 
@@ -31,7 +31,7 @@ namespace SplitThatBill.Backend.Core.OwnedEntities
     {
         public int Id { get; private set; }
         public int PersonId { get; private set; }
-        public virtual Person Person { get; set; }
+        public Person Person { get; set; }
         public string BankName { get; private set; }
         public string AccountNumber { get; private set; }
         public string AccountName { get; private set; }
@@ -57,8 +57,8 @@ namespace SplitThatBill.Backend.Core.Entities
         public DateTime BillDate { get; private set; }
         public string Remarks { get; set; }
         public List<BillItem> BillItems { get; private set; }
-        public virtual List<ExtraCharge> ExtraCharges { get; private set; }
-        public virtual Person BillTaker { get; private set; }
+        public List<ExtraCharge> ExtraCharges { get; private set; }
+        public Person BillTaker { get; private set; }
 
         private Bill()
         {
@@ -138,8 +138,8 @@ namespace SplitThatBill.Backend.Core.Entities
         public string Description { get; set; }
         public decimal UnitPrice { get; set; }
         public int BillId { get; private set; }
-        public virtual Bill Bill { get; private set; }
-        public virtual List<PersonBillItem> PersonBillItems { get; private set; }
+        public Bill Bill { get; private set; }
+        public List<PersonBillItem> PersonBillItems { get; private set; }
         private BillItem()
         {
 
@@ -167,9 +167,9 @@ namespace SplitThatBill.Backend.Core.Entities
         public string Firstname { get; private set; }
         public string Lastname { get; private set; }
         public string Fullname { get => $"{Firstname} {Lastname}"; }
-        public virtual List<PersonBillItem> PersonBillItems { get; private set; }
-        public virtual List<PaymentDetail> PaymentDetails { get; private set; }
-        public virtual Bill Bill { get; private set; }
+        public List<PersonBillItem> PersonBillItems { get; private set; }
+        public List<PaymentDetail> PaymentDetails { get; private set; }
+        public Bill Bill { get; private set; }
         public int BillId { get; private set; }
         private Person()
         {
@@ -186,9 +186,9 @@ namespace SplitThatBill.Backend.Core.Entities
     public class PersonBillItem
     {
         public int PersonId { get; private set; }
-        public virtual Person Person { get; private set; }
+        public Person Person { get; private set; }
         public int BillItemId { get; private set; }
-        public virtual BillItem BillItem { get; private set; }
+        public BillItem BillItem { get; private set; }
         public decimal PayableUnitPrice { get; set; }
         private PersonBillItem()
         {
