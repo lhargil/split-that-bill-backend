@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SplitThatBill.Backend.Business.Dtos;
@@ -13,10 +14,12 @@ namespace SplitThatBill.Backend.Business.Handlers
     public class GetSingleBillRequestHandler : IRequestHandler<GetSingleBillRequest, BillDto>
     {
         private readonly SplitThatBillContext _splitThatBillContext;
+        private readonly IMapper _mapper;
 
-        public GetSingleBillRequestHandler(SplitThatBillContext splitThatBillContext)
+        public GetSingleBillRequestHandler(SplitThatBillContext splitThatBillContext, IMapper mapper)
         {
             _splitThatBillContext = splitThatBillContext;
+            _mapper = mapper;
         }
 
         public Task<BillDto> Handle(GetSingleBillRequest request, CancellationToken cancellationToken)
@@ -30,7 +33,7 @@ namespace SplitThatBill.Backend.Business.Handlers
                 throw new NullReferenceException("The bill requested was not found.");
             }
 
-            return Task.FromResult<BillDto>(null);
+            return Task.FromResult(_mapper.Map<BillDto>(bill));
         }
     }
 }

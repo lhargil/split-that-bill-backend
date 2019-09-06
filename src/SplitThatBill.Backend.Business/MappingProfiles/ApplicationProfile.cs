@@ -22,11 +22,11 @@ namespace SplitThatBill.Backend.Business.MappingProfiles
         }
     }
 
-    //public class MoneyResolver : IValueResolver<Bill, BillDto, Money>
-    //{
-    //    public Money Resolve(Bill source, BillDto destination, Money destMember, ResolutionContext context)
-    //    {
-    //        return new Money(source.)
-    //    }
-    //}
+    public class MoneyResolver : IValueResolver<BillItem, BillItemDto, Money>
+    {
+        public Money Resolve(BillItem source, BillItemDto destination, Money destMember, ResolutionContext context)
+        {
+            return new Money(source.UnitPrice);
+        }
+    }
 }

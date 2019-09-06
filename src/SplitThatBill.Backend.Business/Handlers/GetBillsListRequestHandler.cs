@@ -25,7 +25,7 @@ namespace SplitThatBill.Backend.Business.Handlers
         public Task<List<BillDto>> Handle(GetBillsRequest request, CancellationToken cancellationToken)
         {
             var bills = _splitThatBillContext.Bills
-                // Include(i => i.BillItems)
+                .Include(i => i.BillItems)
                 .ToList();
 
             return Task.FromResult(bills.Select(item => _mapper.Map<BillDto>(item)).ToList());
