@@ -91,8 +91,17 @@ namespace SplitThatBill.Backend.API.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            try
+            {
+                var deleted = await _mediator.Send(new DeleteBillRequest(id));
+                return NoContent();
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                return NotFound(nullReferenceException.Message);
+            }
         }
     }
 }

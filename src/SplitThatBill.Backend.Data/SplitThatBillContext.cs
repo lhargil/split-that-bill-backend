@@ -67,6 +67,7 @@ namespace SplitThatBill.Backend.Data
 
                 if (entry.State == EntityState.Deleted)
                 {
+                    entry.State = EntityState.Modified;
                     entry.Property("IsDeleted").CurrentValue = true;
                 }
             }

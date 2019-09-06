@@ -19,6 +19,7 @@ using AutoMapper;
 using System;
 using SplitThatBill.Backend.Business.MappingProfiles;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace SplitThatBill.Backend.API
 {
@@ -39,7 +40,9 @@ namespace SplitThatBill.Backend.API
             services.AddDbContext<SplitThatBillContext>(options =>
             {
                 options.UseMySql(Configuration.GetConnectionString("SplitThatBillDb"),
-                    config => config.MigrationsAssembly("SplitThatBill.Backend.Data"));
+                    config => config.MigrationsAssembly("SplitThatBill.Backend.Data"))
+                .ConfigureWarnings(warnings =>
+                    warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
             });
 
             var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
