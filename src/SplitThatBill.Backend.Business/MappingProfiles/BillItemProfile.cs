@@ -2,6 +2,7 @@
 using AutoMapper;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Core.Entities;
+using static SplitThatBill.Backend.Business.Dtos.BillFormModel;
 
 namespace SplitThatBill.Backend.Business.MappingProfiles
 {
@@ -11,6 +12,8 @@ namespace SplitThatBill.Backend.Business.MappingProfiles
         {
             CreateMap<BillItem, BillItemDto>()
                 .ForMember(m => m.UnitPrice, cfg => cfg.MapFrom<MoneyResolver>());
+            CreateMap<BillItemFormModel, BillItem>()
+                .ForMember(m => m.UnitPrice, cfg => cfg.MapFrom(item => item.Amount));
         }
     }
 }

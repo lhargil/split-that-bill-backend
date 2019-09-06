@@ -44,14 +44,49 @@ namespace SplitThatBill.Backend.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<ActionResult<BillItemDto>> Post([FromBody]BillFormModel bill)
         {
+            if (null == bill)
+            {
+                throw new ArgumentNullException(nameof(bill), "The bill details submitted is null.");
+            }
+
+            var validateResult = await _mediator.Send(new ValidateBillRequest(bill));
+
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var createResult = await _mediator.Send(new CreateBillRequest(bill));
+
+            return CreatedAtAction(nameof(this.Get), new { id = createResult.Id }, createResult);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<ActionResult> Put(int id, [FromBody]BillFormModel bill)
         {
+            if (null == bill)
+            {
+                throw new ArgumentNullException(nameof(bill), "The bill details submitted is null.");
+            }
+
+            var validateResult = await _mediator.Send(new ValidateBillRequest(bill));
+
+            if (!validateResult.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updated = await _mediator.Send(new UpdateBillRequest(id, bill));
+
+            if (updated)
+            {
+                return NoContent();
+            }
+
+            return BadRequest("The bill cannot be updated");
         }
 
         // DELETE api/values/5

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using System;
 using SplitThatBill.Backend.Business.MappingProfiles;
+using FluentValidation.AspNetCore;
 
 namespace SplitThatBill.Backend.API
 {
@@ -41,6 +42,8 @@ namespace SplitThatBill.Backend.API
                     config => config.MigrationsAssembly("SplitThatBill.Backend.Data"));
             });
 
+            var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
+
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>
@@ -49,8 +52,13 @@ namespace SplitThatBill.Backend.API
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                     // Use string enums in the serializer and the spec (optional)
                     options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                })
+                .AddFluentValidation(fv =>
+                {
+                    fv.RegisterValidatorsFromAssembly(businessAssembly);
+                    fv.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                    fv.ImplicitlyValidateChildProperties = true;
                 });
-
             services.AddOpenApiDocument((config, sp) =>
             {
                 var nswagOptions = sp.GetRequiredService<IOptionsMonitor<NswagOptions>>().CurrentValue;
@@ -69,7 +77,6 @@ namespace SplitThatBill.Backend.API
                 };
             });
 
-            var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
             services.AddMediatR(new Assembly[] { businessAssembly });
             services.AddAutoMapper(businessAssembly);
 

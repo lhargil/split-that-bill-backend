@@ -10,6 +10,7 @@ namespace SplitThatBill.Backend.Business.MappingProfiles
         {
             CreateMap<Bill, BillDto>()
                 .ForMember(m => m.Remarks, cfg => cfg.NullSubstitute(string.Empty));
+            CreateMap<BillFormModel, Bill>();
         }
     }
 }
