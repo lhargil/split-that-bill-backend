@@ -8,18 +8,10 @@ namespace SplitThatBill.Backend.Business.Dtos
 {
     public class BillDto
     {
-        private readonly Bill _bill;
-
-        public BillDto(Bill bill)
-        {
-            _bill = bill;
-        }
-
-        public int Id => _bill.Id;
-        public string EstablishmentName => _bill.EstablishmentName;
-        public string BillDate => _bill.BillDate.ToString("MMM d, yyyy");
-        public List<BillItemDto> BillItems => _bill.BillItems.Select(item => new BillItemDto(item))
-            .ToList();
+        public int Id { get; private set; }
+        public string EstablishmentName { get; private set; }
+        public string BillDate { get; private set; }
+        public string Remarks { get; private set; }
     }
 
     public class BillItemDto

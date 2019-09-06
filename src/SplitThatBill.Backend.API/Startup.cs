@@ -15,6 +15,9 @@ using MediatR;
 using System.Reflection;
 using System.Linq;
 using System.Collections.Generic;
+using AutoMapper;
+using System;
+using SplitThatBill.Backend.Business.MappingProfiles;
 
 namespace SplitThatBill.Backend.API
 {
@@ -66,7 +69,9 @@ namespace SplitThatBill.Backend.API
                 };
             });
 
-            services.AddMediatR(new Assembly[] { Assembly.Load("SplitThatBill.Backend.Business") });
+            var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
+            services.AddMediatR(new Assembly[] { businessAssembly });
+            services.AddAutoMapper(businessAssembly);
 
             services.AddScoped<IContextData, RequestContextData>();
             services.AddTransient<IDateTimeManager, DateTimeManager>();

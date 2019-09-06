@@ -30,7 +30,7 @@ namespace SplitThatBill.Backend.Business.Handlers
                 throw new NullReferenceException("The bill requested was not found.");
             }
 
-            return Task.FromResult(new BillDto(bill));
+            return Task.FromResult<BillDto>(null);
         }
     }
 }

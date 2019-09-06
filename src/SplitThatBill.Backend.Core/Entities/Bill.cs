@@ -18,7 +18,6 @@ namespace SplitThatBill.Backend.Core.Entities
 
         private Bill()
         {
-
             BillItems = new List<BillItem>();
             ExtraCharges = new List<ExtraCharge>();
         }
