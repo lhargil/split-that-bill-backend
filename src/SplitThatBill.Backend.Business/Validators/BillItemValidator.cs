@@ -1,6 +1,5 @@
-﻿using System;
-using FluentValidation;
-using static SplitThatBill.Backend.Business.Dtos.BillFormModel;
+﻿using FluentValidation;
+using SplitThatBill.Backend.Business.Dtos;
 
 namespace SplitThatBill.Backend.Business.Validators
 {

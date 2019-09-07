@@ -22,7 +22,7 @@ namespace SplitThatBill.Backend.Business.Validators
                 .SetValidator(new BillItemValidator());
         }
 
-        private bool BeAtLeastOne(List<BillFormModel.BillItemFormModel> arg)
+        private bool BeAtLeastOne(List<BillItemFormModel> arg)
         {
             return arg.Any();
         }
