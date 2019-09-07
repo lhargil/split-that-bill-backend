@@ -45,8 +45,9 @@ namespace SplitThatBill.Backend.API
                     warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
             });
 
-            var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
+            services.AddRouting(opts => opts.LowercaseUrls = true);
 
+            var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>
