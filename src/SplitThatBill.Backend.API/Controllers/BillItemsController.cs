@@ -47,8 +47,28 @@ namespace SplitThatBill.Backend.API.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post(int id, [FromBody]string value)
+        public async Task<ActionResult<BillItemDto>> Post(int id, [FromBody]BillItemFormModel form)
         {
+
+            try
+            {
+                if (null == form)
+                {
+                    throw new ArgumentNullException(nameof(form), "The bill item data is null.");
+                }
+
+                var createResult = await _mediator.Send(new CreateBillItemRequest(id, form));
+
+                return CreatedAtAction(nameof(this.Get), new { id, billItemId = createResult.Id }, createResult);
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                return BadRequest(argumentNullException.Message);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                return NotFound(nullReferenceException.Message);
+            }
         }
 
         // PUT api/values/5
