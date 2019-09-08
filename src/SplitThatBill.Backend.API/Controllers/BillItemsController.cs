@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
@@ -73,8 +74,35 @@ namespace SplitThatBill.Backend.API.Controllers
 
         // PUT api/values/5
         [HttpPut("{billItemId}")]
-        public void Put(int id, int billItemId, [FromBody]string value)
+        public async Task<ActionResult> Put(int id, int billItemId, [FromBody]BillItemFormModel form)
         {
+            try
+            {
+                if (null == form)
+                {
+                    throw new ArgumentNullException(nameof(form), "The bill item data is null.");
+                }
+
+                var updated = await _mediator.Send(new UpdateBillItemRequest(id, billItemId, form));
+
+                if (updated)
+                {
+                    return NoContent();
+                }
+                throw new Exception("The bill item cannot be updated.");
+            }
+            catch (ArgumentNullException argumentNullException)
+            {
+                return BadRequest(argumentNullException.Message);
+            }
+            catch (NullReferenceException nullReferenceException)
+            {
+                return NotFound(nullReferenceException.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE api/values/5
