@@ -107,8 +107,17 @@ namespace SplitThatBill.Backend.API.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{billItemId}")]
-        public void Delete(int id, int billItemId)
+        public async Task<ActionResult> Delete(int id, int billItemId)
         {
+            try
+            {
+                var deleted = await _mediator.Send(new DeleteBillItemRequest(id, billItemId));
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

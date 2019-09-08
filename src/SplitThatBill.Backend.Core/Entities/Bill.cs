@@ -44,9 +44,9 @@ namespace SplitThatBill.Backend.Core.Entities
             BillItems.Add(new BillItem(description, unitPrice));
         }
 
-        public int RemoveBillItem(int billId)
+        public int RemoveBillItem(int billItemId)
         {
-            return RemoveBillItem(item => item.Id == billId);
+            return RemoveBillItem(item => item.Id == billItemId);
         }
 
         public int RemoveBillItem(Predicate<BillItem> filterExpression)
