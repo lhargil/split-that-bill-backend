@@ -76,11 +76,16 @@ namespace SplitThatBill.Backend.Core.Entities
 
         public decimal GetBillTotal()
         {
-            var totalCharges = ExtraCharges.Sum(c => c.Rate);
+            var totalCharges = GetTotalCharges();
             var totalBillAmountWithoutCharges = BillItems.Aggregate(0.0M, (acc, bill) => acc + bill.UnitPrice);
             var totalBillAmount = totalBillAmountWithoutCharges + (totalBillAmountWithoutCharges * totalCharges);
 
             return totalBillAmount;
+        }
+
+        public decimal GetTotalCharges()
+        {
+            return ExtraCharges.Sum(s => s.Rate);
         }
     }
 }
