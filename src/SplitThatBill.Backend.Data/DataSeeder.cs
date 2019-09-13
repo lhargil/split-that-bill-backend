@@ -31,6 +31,12 @@ namespace SplitThatBill.Backend.Data
                         billItem1,
                         billITem2
                     });
+
+                var extraCharge1 = new Core.OwnedEntities.ExtraCharge("Service charge", 0.10M);
+                var extraCharge2 = new Core.OwnedEntities.ExtraCharge("SST", 0.06M);
+                bill.AddExtraCharge(extraCharge1);
+                bill.AddExtraCharge(extraCharge2);
+
                 _splitThatBillContext.People.Add(person1);
                 _splitThatBillContext.Bills.Add(bill);
                 _splitThatBillContext.SaveChanges();

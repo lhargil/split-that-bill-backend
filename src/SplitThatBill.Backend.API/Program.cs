@@ -27,7 +27,7 @@ namespace SplitThatBill.Backend.API
                     var services = scope.ServiceProvider;
                     var splitThatBillContext = services.GetService<SplitThatBillContext>();
                     splitThatBillContext.Database.EnsureDeleted();
-                    splitThatBillContext.Database.Migrate();
+                    splitThatBillContext.Database.EnsureCreated();
 
                     var dateTimeManager = services.GetRequiredService<IDateTimeManager>();
 

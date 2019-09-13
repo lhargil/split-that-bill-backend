@@ -57,6 +57,10 @@ namespace SplitThatBill.Backend.Data
                 var today = _dateTimeManager.Today;
                 var currentUser = _contextData.CurrentUser;
 
+                if (entry.Metadata.FindProperty("DateModified") == null)
+                {
+                    continue;
+                }
                 entry.Property("DateModified").CurrentValue = today;
                 entry.Property("ModifiedBy").CurrentValue = currentUser;
                 if (entry.State == EntityState.Added)
