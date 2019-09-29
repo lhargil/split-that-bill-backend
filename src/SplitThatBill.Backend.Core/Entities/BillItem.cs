@@ -11,6 +11,7 @@ namespace SplitThatBill.Backend.Core.Entities
         public int Id { get; private set; }
         public string Description { get; set; }
         public decimal UnitPrice { get; set; }
+        public decimal? DiscountRate { get; set; }
         public int BillId { get; private set; }
         public Bill Bill { get; private set; }
         public List<PersonBillItem> PersonBillItems { get; private set; }
@@ -29,9 +30,17 @@ namespace SplitThatBill.Backend.Core.Entities
         {
             var totalPayable = Bill.ExtraCharges.Aggregate(0.0M, (acc, charge) =>
             {
-                return UnitPrice + (UnitPrice * charge.Rate);
+                var discountedUnitPrice = CalculateDiscountedUnitPrice(UnitPrice, DiscountRate);
+                return discountedUnitPrice + (discountedUnitPrice * charge.Rate);
             });
             return totalPayable;
+        }
+
+        private decimal CalculateDiscountedUnitPrice(decimal unitPrice, decimal? discount)
+        {
+            return discount.HasValue ?
+                unitPrice * discount.Value :
+                unitPrice;
         }
     }
 }
