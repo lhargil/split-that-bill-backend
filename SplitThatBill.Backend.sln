@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitThatBill.Backend.API", "src\SplitThatBill.Backend.API\SplitThatBill.Backend.API.csproj", "{03861545-DB5A-440C-B406-966B131444C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitThatBill.Backend.API", "src\SplitThatBill.Backend.API\SplitThatBill.Backend.API.csproj", "{03861545-DB5A-440C-B406-966B131444C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitThatBill.Backend.Core", "src\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj", "{689A8F73-A3B0-4DAB-82A6-477488CB7DE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitThatBill.Backend.Core", "src\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj", "{689A8F73-A3B0-4DAB-82A6-477488CB7DE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitThatBill.Backend.Data", "src\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj", "{465BAF5B-CAB8-4B2E-A9A5-31B3480FB715}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitThatBill.Backend.Data", "src\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj", "{465BAF5B-CAB8-4B2E-A9A5-31B3480FB715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SplitThatBill.Backend.Business", "src\SplitThatBill.Backend.Business\SplitThatBill.Backend.Business.csproj", "{943BE494-6ABA-4ECD-9192-A5CC2304FA1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SplitThatBill.Backend.Business", "src\SplitThatBill.Backend.Business\SplitThatBill.Backend.Business.csproj", "{943BE494-6ABA-4ECD-9192-A5CC2304FA1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

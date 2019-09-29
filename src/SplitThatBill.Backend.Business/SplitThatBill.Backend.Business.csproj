@@ -13,10 +13,6 @@
     <PackageReference Include="FluentValidation" Version="8.4.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Requests\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="MappingProfiles\" />
     <Folder Include="Validators\" />
   </ItemGroup>
   <ItemGroup>
