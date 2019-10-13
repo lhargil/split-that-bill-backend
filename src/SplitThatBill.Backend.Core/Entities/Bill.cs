@@ -14,7 +14,7 @@ namespace SplitThatBill.Backend.Core.Entities
         public string Remarks { get; set; }
         public List<BillItem> BillItems { get; private set; }
         public List<ExtraCharge> ExtraCharges { get; private set; }
-        public Person BillTaker { get; private set; }
+        public Person BillTaker { get; set; }
 
         private Bill()
         {
@@ -34,9 +34,27 @@ namespace SplitThatBill.Backend.Core.Entities
             BillItems = billItems;
         }
 
+        public void SetExtraCharges(List<ExtraCharge> extraCharges)
+        {
+            ExtraCharges = extraCharges;
+        }
+
+        public void SetBillItems(List<BillItem> billItems)
+        {
+            BillItems = billItems;
+        }
+
         public void AddBillItem(BillItem billItem)
         {
             BillItems.Add(billItem);
+        }
+
+        public void Update(string establishmentName, DateTime billDate, List<BillItem> billItems, List<ExtraCharge> extraCharges)
+        {
+            EstablishmentName = establishmentName;
+            BillDate = billDate;
+            BillItems = billItems;
+            ExtraCharges = extraCharges;
         }
 
         public void AddBillItem(string description, decimal unitPrice)
@@ -62,6 +80,16 @@ namespace SplitThatBill.Backend.Core.Entities
         public void AddExtraCharge(string description, decimal rate)
         {
             ExtraCharges.Add(new ExtraCharge(description, rate));
+        }
+
+        public void UpdateCharge(ExtraCharge extraCharge)
+        {
+            var charge = ExtraCharges.Find(ec => ec.Id == extraCharge.Id);
+            if (charge is object)
+            {
+                charge.Description = extraCharge.Description;
+                charge.Rate = extraCharge.Rate;
+            }
         }
 
         public int RemoveExtraCharge(int extraChargeId)

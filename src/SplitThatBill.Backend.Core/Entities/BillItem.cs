@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SplitThatBill.Backend.Core.Entities
@@ -9,8 +10,8 @@ namespace SplitThatBill.Backend.Core.Entities
     public class BillItem
     {
         public int Id { get; private set; }
-        public string Description { get; set; }
-        public decimal UnitPrice { get; set; }
+        public string Description { get; private set; }
+        public decimal UnitPrice { get; private set; }
         public decimal? DiscountRate { get; set; }
         public int BillId { get; private set; }
         public Bill Bill { get; private set; }
@@ -41,6 +42,12 @@ namespace SplitThatBill.Backend.Core.Entities
             return discount.HasValue ?
                 unitPrice * discount.Value :
                 unitPrice;
+        }
+
+        public void Update(string description, decimal unitPrice)
+        {
+            Description = description;
+            UnitPrice = unitPrice;
         }
     }
 }

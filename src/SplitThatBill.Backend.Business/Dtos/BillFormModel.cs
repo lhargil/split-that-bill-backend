@@ -5,9 +5,10 @@ namespace SplitThatBill.Backend.Business.Dtos
 {
     public class BillFormModel
     {
-        public BillFormModel()
+        private BillFormModel()
         {
             BillItems = new List<BillItemFormModel>();
+            ExtraCharges = new List<ExtraChargeFormModel>();
         }
         public BillFormModel(int id, string establishmentName, DateTime billDate, string remarks) : this()
         {
@@ -21,5 +22,6 @@ namespace SplitThatBill.Backend.Business.Dtos
         public DateTime BillDate { get; set; }
         public string Remarks { get; set; }
         public List<BillItemFormModel> BillItems { get; set; }
+        public List<ExtraChargeFormModel> ExtraCharges { get; set; }
     }
 }

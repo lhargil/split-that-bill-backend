@@ -18,5 +18,11 @@ namespace SplitThatBill.Backend.Core.OwnedEntities
             Description = description;
             Rate = rate;
         }
+
+        public void Update(string description, decimal rate)
+        {
+            Description = description;
+            Rate = rate;
+        }
     }
 }
