@@ -82,16 +82,6 @@ namespace SplitThatBill.Backend.Core.Entities
             ExtraCharges.Add(new ExtraCharge(description, rate));
         }
 
-        public void UpdateCharge(ExtraCharge extraCharge)
-        {
-            var charge = ExtraCharges.Find(ec => ec.Id == extraCharge.Id);
-            if (charge is object)
-            {
-                charge.Description = extraCharge.Description;
-                charge.Rate = extraCharge.Rate;
-            }
-        }
-
         public int RemoveExtraCharge(int extraChargeId)
         {
             return RemoveExtraCharge(extraCharge => extraCharge.Id == extraChargeId);

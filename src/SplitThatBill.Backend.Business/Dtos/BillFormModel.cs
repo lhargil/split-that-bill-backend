@@ -17,11 +17,11 @@ namespace SplitThatBill.Backend.Business.Dtos
             BillDate = billDate;
             Remarks = remarks;
         }
-        public int Id { get; set; }
-        public string EstablishmentName { get; set; }
-        public DateTime BillDate { get; set; }
+        public int Id { get; private set; }
+        public string EstablishmentName { get; private set; }
+        public DateTime BillDate { get; private set; }
         public string Remarks { get; set; }
-        public List<BillItemFormModel> BillItems { get; set; }
-        public List<ExtraChargeFormModel> ExtraCharges { get; set; }
+        public List<BillItemFormModel> BillItems { get; private set; }
+        public List<ExtraChargeFormModel> ExtraCharges { get; private set; }
     }
 }

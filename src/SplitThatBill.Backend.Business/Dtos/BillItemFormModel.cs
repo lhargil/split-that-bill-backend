@@ -9,8 +9,8 @@
             Id = id;
         }
 
-        public int Id { get; set; }
-        public string Description { get; set; }
-        public decimal Amount { get; set; }
+        public int Id { get; private set; }
+        public string Description { get; private set; }
+        public decimal Amount { get; private set; }
     }
 }

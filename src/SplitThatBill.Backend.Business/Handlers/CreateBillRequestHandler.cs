@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -24,7 +25,8 @@ namespace SplitThatBill.Backend.Business.Handlers
         public async Task<BillDto> Handle(CreateBillRequest request, CancellationToken cancellationToken)
         {
             var billToCreate = _mapper.Map<Bill>(request.BillFormModel);
-
+            billToCreate.SetBillItems(request.BillFormModel.BillItems.Select(item => new BillItem(item.Description, item.Amount)).ToList());
+            billToCreate.SetExtraCharges(request.BillFormModel.ExtraCharges.Select(item => new Core.OwnedEntities.ExtraCharge(item.Description, item.Rate)).ToList());
             _splitThatBillContext.Add(billToCreate);
 
             await _splitThatBillContext.SaveChangesAsync();
