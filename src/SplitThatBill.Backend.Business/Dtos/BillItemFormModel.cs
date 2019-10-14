@@ -12,5 +12,6 @@
         public int Id { get; private set; }
         public string Description { get; private set; }
         public decimal Amount { get; private set; }
+        public decimal? Discount { get; set; }
     }
 }

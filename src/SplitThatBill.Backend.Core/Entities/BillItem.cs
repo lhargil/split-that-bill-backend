@@ -27,6 +27,11 @@ namespace SplitThatBill.Backend.Core.Entities
             UnitPrice = unitPrice;
         }
 
+        public BillItem(string description, decimal unitPrice, decimal? discountRate) : this(description, unitPrice)
+        {
+            DiscountRate = discountRate;
+        }
+
         public decimal GetTotalPayablePerItem()
         {
             var totalPayable = Bill.ExtraCharges.Aggregate(0.0M, (acc, charge) =>
@@ -46,8 +51,14 @@ namespace SplitThatBill.Backend.Core.Entities
 
         public void Update(string description, decimal unitPrice)
         {
+            Update(description, unitPrice);
+        }
+
+        public void Update(string description, decimal unitPrice, decimal? discountRate)
+        {
             Description = description;
             UnitPrice = unitPrice;
+            DiscountRate = discountRate;
         }
     }
 }

@@ -46,10 +46,10 @@ namespace SplitThatBill.Backend.Business.Handlers
                     var billItem = bill.BillItems.Find(bi => bi.Id == item.Id);
                     if (billItem is object)
                     {
-                        billItem.Update(item.Description, item.Amount);
+                        billItem.Update(item.Description, item.Amount, item.Discount);
                         return billItem;
                     }
-                    return new BillItem(item.Description, item.Amount);
+                    return new BillItem(item.Description, item.Amount, item.Discount);
                 }).ToList(),
                 request.BillFormModel.ExtraCharges.Select(item =>
                 {

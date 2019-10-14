@@ -11,6 +11,7 @@ namespace SplitThatBill.Backend.Business.MappingProfiles
         public BillItemProfile()
         {
             CreateMap<BillItem, BillItemDto>()
+                .ForMember(m => m.Discount, cfg => cfg.MapFrom(m => m.DiscountRate))
                 .ForMember(m => m.UnitPrice, cfg => cfg.MapFrom<MoneyResolver>());
             CreateMap<BillItemFormModel, BillItem>()
                 .ForMember(m => m.UnitPrice, cfg => cfg.MapFrom(item => item.Amount));

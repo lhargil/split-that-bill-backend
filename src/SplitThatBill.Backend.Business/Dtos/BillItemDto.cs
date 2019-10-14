@@ -8,5 +8,6 @@ namespace SplitThatBill.Backend.Business.Dtos
         public int Id { get; private set; }
         public string Description { get; private set; }
         public Money UnitPrice { get; private set; }
+        public decimal? Discount { get; set; }
     }
 }
