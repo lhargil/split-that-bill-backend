@@ -18,8 +18,8 @@ namespace SplitThatBill.Backend.Data.Migrations
                     BillDate = table.Column<DateTime>(nullable: false),
                     Remarks = table.Column<string>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
-                    DateModified = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     ModifiedBy = table.Column<string>(nullable: true),
                     Version = table.Column<DateTime>(rowVersion: true, nullable: true)
@@ -37,10 +37,11 @@ namespace SplitThatBill.Backend.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
                     UnitPrice = table.Column<decimal>(nullable: false),
+                    DiscountRate = table.Column<decimal>(nullable: true),
                     BillId = table.Column<int>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
-                    DateModified = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     ModifiedBy = table.Column<string>(nullable: true),
                     Version = table.Column<DateTime>(rowVersion: true, nullable: true)
@@ -60,14 +61,15 @@ namespace SplitThatBill.Backend.Data.Migrations
                 name: "ExtraCharge",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    BillId = table.Column<int>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(nullable: true),
-                    Rate = table.Column<decimal>(nullable: false)
+                    Rate = table.Column<decimal>(nullable: false),
+                    BillId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExtraCharge", x => new { x.BillId, x.Id });
+                    table.PrimaryKey("PK_ExtraCharge", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ExtraCharge_Bills_BillId",
                         column: x => x.BillId,
@@ -84,10 +86,10 @@ namespace SplitThatBill.Backend.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Firstname = table.Column<string>(nullable: true),
                     Lastname = table.Column<string>(nullable: true),
-                    BillId = table.Column<int>(nullable: false),
+                    BillId = table.Column<int>(nullable: true),
                     CreatedBy = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
-                    DateModified = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     ModifiedBy = table.Column<string>(nullable: true),
                     Version = table.Column<DateTime>(rowVersion: true, nullable: true)
@@ -100,7 +102,7 @@ namespace SplitThatBill.Backend.Data.Migrations
                         column: x => x.BillId,
                         principalTable: "Bills",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,8 +134,8 @@ namespace SplitThatBill.Backend.Data.Migrations
                     BillItemId = table.Column<int>(nullable: false),
                     PayableUnitPrice = table.Column<decimal>(nullable: false),
                     CreatedBy = table.Column<string>(nullable: true),
-                    DateCreated = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
-                    DateModified = table.Column<DateTime>(nullable: false, defaultValueSql: "CURRENT_TIMESTAMP(6)"),
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    DateModified = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
                     ModifiedBy = table.Column<string>(nullable: true),
                     Version = table.Column<DateTime>(rowVersion: true, nullable: true)
@@ -158,6 +160,11 @@ namespace SplitThatBill.Backend.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BillItem_BillId",
                 table: "BillItem",
+                column: "BillId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ExtraCharge_BillId",
+                table: "ExtraCharge",
                 column: "BillId");
 
             migrationBuilder.CreateIndex(

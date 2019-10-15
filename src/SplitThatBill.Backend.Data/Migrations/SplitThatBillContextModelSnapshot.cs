@@ -90,7 +90,7 @@ namespace SplitThatBill.Backend.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("BillId");
+                    b.Property<int?>("BillId");
 
                     b.Property<string>("CreatedBy");
 
@@ -189,8 +189,7 @@ namespace SplitThatBill.Backend.Data.Migrations
                 {
                     b.HasOne("SplitThatBill.Backend.Core.Entities.Bill", "Bill")
                         .WithOne("BillTaker")
-                        .HasForeignKey("SplitThatBill.Backend.Core.Entities.Person", "BillId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SplitThatBill.Backend.Core.Entities.Person", "BillId");
 
                     b.OwnsMany("SplitThatBill.Backend.Core.OwnedEntities.PaymentDetail", "PaymentDetails", b1 =>
                         {

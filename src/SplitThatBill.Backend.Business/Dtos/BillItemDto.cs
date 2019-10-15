@@ -9,5 +9,13 @@ namespace SplitThatBill.Backend.Business.Dtos
         public string Description { get; private set; }
         public Money UnitPrice { get; private set; }
         public decimal? Discount { get; set; }
+        private BillItemDto() { }
+        public BillItemDto(int id, string description, decimal amount, decimal? discount)
+        {
+            Id = id;
+            Description = description;
+            UnitPrice = new Money(amount);
+            Discount = discount;
+        }
     }
 }

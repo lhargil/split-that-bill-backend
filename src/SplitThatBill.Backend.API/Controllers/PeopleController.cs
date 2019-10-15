@@ -42,5 +42,19 @@ namespace SplitThatBill.Backend.API.Controllers
                 return NotFound(nullRefException.Message);
             }
         }
+
+        [HttpGet("{id}/items")]
+        public async Task<ActionResult<PersonBillItemsDto>> GetPersonBillItems(int id)
+        {
+            try
+            {
+                var personBillItems = await _mediator.Send(new GetPersonBillItemsRequest(id));
+                return personBillItems;
+            }
+            catch (NullReferenceException nullRefException)
+            {
+                return NotFound(nullRefException.Message);
+            }
+        }
     }
 }

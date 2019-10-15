@@ -11,5 +11,33 @@
         {
 
         }
+        public PersonBillItem(Person person, BillItem billItem, decimal payableUnitPrice)
+        {
+            Person = person;
+            BillItem = billItem;
+            PayableUnitPrice = payableUnitPrice;
+        }
+        public PersonBillItem(int personId, int billItemId, decimal payableUnitPrice)
+        {
+            PersonId = personId;
+            BillItemId = billItemId;
+            PayableUnitPrice = payableUnitPrice;
+        }
+        public PersonBillItem(int personId, BillItem billItem, decimal payableUnitPrice)
+        {
+            PersonId = personId;
+            BillItem = billItem;
+            PayableUnitPrice = payableUnitPrice;
+        }
+        public void Update(Person person, BillItem billItem, decimal payableUnitPrice)
+        {
+            Person = person;
+            BillItem = billItem;
+            PayableUnitPrice = payableUnitPrice;
+        }
+        public void Update(decimal payableUnitPrice)
+        {
+            PayableUnitPrice = payableUnitPrice;
+        }
     }
 }

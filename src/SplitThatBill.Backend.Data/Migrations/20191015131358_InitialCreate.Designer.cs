@@ -9,8 +9,8 @@ using SplitThatBill.Backend.Data;
 namespace SplitThatBill.Backend.Data.Migrations
 {
     [DbContext(typeof(SplitThatBillContext))]
-    [Migration("20190906151809_Updated-BaseTypeConfig")]
-    partial class UpdatedBaseTypeConfig
+    [Migration("20191015131358_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,8 @@ namespace SplitThatBill.Backend.Data.Migrations
 
                     b.Property<string>("Description");
 
+                    b.Property<decimal?>("DiscountRate");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(false);
@@ -90,7 +92,7 @@ namespace SplitThatBill.Backend.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("BillId");
+                    b.Property<int?>("BillId");
 
                     b.Property<string>("CreatedBy");
 
@@ -155,19 +157,22 @@ namespace SplitThatBill.Backend.Data.Migrations
                 {
                     b.OwnsMany("SplitThatBill.Backend.Core.OwnedEntities.ExtraCharge", "ExtraCharges", b1 =>
                         {
-                            b1.Property<int>("BillId");
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd();
 
-                            b1.Property<int>("Id");
+                            b1.Property<int>("BillId");
 
                             b1.Property<string>("Description");
 
                             b1.Property<decimal>("Rate");
 
-                            b1.HasKey("BillId", "Id");
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("BillId");
 
                             b1.ToTable("ExtraCharge");
 
-                            b1.HasOne("SplitThatBill.Backend.Core.Entities.Bill", "Bill")
+                            b1.HasOne("SplitThatBill.Backend.Core.Entities.Bill")
                                 .WithMany("ExtraCharges")
                                 .HasForeignKey("BillId")
                                 .OnDelete(DeleteBehavior.Cascade);
@@ -186,8 +191,7 @@ namespace SplitThatBill.Backend.Data.Migrations
                 {
                     b.HasOne("SplitThatBill.Backend.Core.Entities.Bill", "Bill")
                         .WithOne("BillTaker")
-                        .HasForeignKey("SplitThatBill.Backend.Core.Entities.Person", "BillId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("SplitThatBill.Backend.Core.Entities.Person", "BillId");
 
                     b.OwnsMany("SplitThatBill.Backend.Core.OwnedEntities.PaymentDetail", "PaymentDetails", b1 =>
                         {

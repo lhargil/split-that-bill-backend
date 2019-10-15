@@ -17,11 +17,11 @@ namespace SplitThatBill.Backend.Data.Configurations
                 .WithOne(p => p.Bill)
                 .IsRequired();
 
+            //optional
             builder
                 .HasOne(p => p.BillTaker)
                 .WithOne(p => p.Bill)
-                .HasForeignKey<Person>(p => p.BillId)
-                .IsRequired();
+                .HasForeignKey<Person>(p => p.BillId);
 
             // Owned entities
             builder.OwnsMany(p => p.ExtraCharges, a =>

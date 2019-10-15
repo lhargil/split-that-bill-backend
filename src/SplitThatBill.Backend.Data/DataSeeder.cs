@@ -22,11 +22,12 @@ namespace SplitThatBill.Backend.Data
             if (!_splitThatBillContext.Bills.Any())
             {
                 var person1 = new Person("lhar", "gil");
+                var person2 = new Person("jon", "snow");
                 var billItem1 = new BillItem("Cup of rice", 3.0M);
                 var billITem2 = new BillItem("Ayam goreng", 7.0M);
                 var bill = new Bill("Sri Ayutthaya",
                     _dateTimeManager.Today,
-                    person1,
+                    null,
                     new List<BillItem> {
                         billItem1,
                         billITem2
@@ -36,8 +37,9 @@ namespace SplitThatBill.Backend.Data
                 var extraCharge2 = new Core.OwnedEntities.ExtraCharge("SST", 0.06M);
                 bill.AddExtraCharge(extraCharge1);
                 bill.AddExtraCharge(extraCharge2);
-
+                person2.AddBillItem(billItem1, billItem1.UnitPrice);
                 _splitThatBillContext.People.Add(person1);
+                _splitThatBillContext.People.Add(person2);
                 _splitThatBillContext.Bills.Add(bill);
                 _splitThatBillContext.SaveChanges();
             }

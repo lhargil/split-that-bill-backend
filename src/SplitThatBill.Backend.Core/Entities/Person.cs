@@ -1,4 +1,5 @@
 ﻿using SplitThatBill.Backend.Core.OwnedEntities;
+using System;
 using System.Collections.Generic;
 
 namespace SplitThatBill.Backend.Core.Entities
@@ -12,16 +13,32 @@ namespace SplitThatBill.Backend.Core.Entities
         public List<PersonBillItem> PersonBillItems { get; private set; }
         public List<PaymentDetail> PaymentDetails { get; private set; }
         public Bill Bill { get; private set; }
-        public int BillId { get; private set; }
+        public int? BillId { get; private set; }
         private Person()
         {
             PersonBillItems = new List<PersonBillItem>();
             PaymentDetails = new List<PaymentDetail>();
         }
-        public Person(string firstname, string lastname)
+        public Person(string firstname, string lastname) : this()
         {
             Firstname = firstname;
             Lastname = lastname;
+        }
+        public void AddBillItem(BillItem billItem, decimal payableUnitPrice)
+        {
+            PersonBillItems.Add(new PersonBillItem(this, billItem, payableUnitPrice));
+        }
+        public void RemoveBillItem(BillItem billItem)
+        {
+            RemoveBillItem(item => item.PersonId == Id && item.BillItemId == billItem.Id);
+        }
+        public void RemoveBillItem(int billItemId)
+        {
+            RemoveBillItem(item => item.PersonId == Id && item.BillItemId == billItemId);
+        }
+        public void RemoveBillItem(Predicate<PersonBillItem> filterExpression)
+        {
+            PersonBillItems.RemoveAll(filterExpression);
         }
     }
 }
