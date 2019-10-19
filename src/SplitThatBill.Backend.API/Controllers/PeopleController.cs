@@ -56,5 +56,51 @@ namespace SplitThatBill.Backend.API.Controllers
                 return NotFound(nullRefException.Message);
             }
         }
+
+        [HttpPost]
+        public async Task<ActionResult<PersonDto>> CreatePerson([FromBody] PersonFormModel personForm)
+        {
+            try
+            {
+                if (null == personForm)
+                {
+                    throw new ArgumentNullException(nameof(personForm), "Person data is invalid.");
+                }
+
+                var createdResult = await _mediator.Send(new CreatePersonRequest(personForm));
+                return CreatedAtAction(nameof(this.GetPerson), new { id = createdResult.Id }, createdResult);
+            }
+            catch (ArgumentNullException argNullException)
+            {
+                return BadRequest(argNullException.Message);
+            }
+            catch (NullReferenceException nullRefException)
+            {
+                return NotFound(nullRefException.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<PersonDto>> UpdatePerson(int id, [FromBody] PersonFormModel personForm)
+        {
+            try
+            {
+                if (null == personForm)
+                {
+                    throw new ArgumentNullException(nameof(personForm), "Person data is invalid.");
+                }
+
+                var updatedResult = await _mediator.Send(new UpdatePersonRequest(id, personForm));
+                return NoContent();
+            }
+            catch (ArgumentNullException argNullException)
+            {
+                return BadRequest(argNullException.Message);
+            }
+            catch (NullReferenceException nullRefException)
+            {
+                return NotFound(nullRefException.Message);
+            }
+        }
     }
 }

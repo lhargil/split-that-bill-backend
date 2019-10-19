@@ -24,6 +24,11 @@ namespace SplitThatBill.Backend.Core.Entities
             Firstname = firstname;
             Lastname = lastname;
         }
+        public void Update(string firstname, string lastname)
+        {
+            Firstname = firstname;
+            Lastname = lastname;
+        }
         public void AddBillItem(BillItem billItem, decimal payableUnitPrice)
         {
             PersonBillItems.Add(new PersonBillItem(this, billItem, payableUnitPrice));
