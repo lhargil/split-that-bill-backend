@@ -14,6 +14,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Validators\" />
+    <Folder Include="Requests\Billing\" />
+    <Folder Include="Handlers\Billing\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />

@@ -2,6 +2,7 @@
 {
     public class PersonBillItem
     {
+        public int Id { get; private set; }
         public int PersonId { get; private set; }
         public Person Person { get; private set; }
         public int BillItemId { get; private set; }
