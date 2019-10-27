@@ -26,6 +26,8 @@ namespace SplitThatBill.Backend.Business.Handlers
         {
             var bill = _splitThatBillContext.Bills
                 .Include(i => i.BillItems)
+                .Include(i => i.Participants)
+                    .ThenInclude(j => j.Person)
                 .FirstOrDefault(item => item.Id == request.BillId);
 
             if (null == bill)

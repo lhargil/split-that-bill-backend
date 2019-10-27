@@ -30,6 +30,7 @@ namespace SplitThatBill.Backend.Business.Handlers
             var bill = await _splitThatBillContext.Bills
                 .Include(i => i.BillItems)
                 .Include(i => i.ExtraCharges)
+                .Include(i => i.Participants)
                 .FirstOrDefaultAsync(b => b.Id == request.Id);
 
             if (null == bill)
@@ -39,6 +40,7 @@ namespace SplitThatBill.Backend.Business.Handlers
 
             RemoveExtraCharges(bill, request.BillFormModel.ExtraCharges);
             RemoveBillItems(bill, request.BillFormModel.BillItems);
+            RemoveParticipants(bill, request.BillFormModel.Participants);
             bill.Update(request.BillFormModel.EstablishmentName,
                 request.BillFormModel.BillDate,
                 request.BillFormModel.BillItems.Select(item =>
@@ -61,9 +63,29 @@ namespace SplitThatBill.Backend.Business.Handlers
                     }
                     return new ExtraCharge(item.Description, item.Rate);
                 }).ToList());
+            bill.UpdateParticipants(request.BillFormModel.Participants.Select(p =>
+            {
+                var billParticipant = bill.Participants.Find(bp => bp.Id == p.Id);
+                if (billParticipant is object)
+                {
+                    return billParticipant;
+                }
+                return new BillParticipant(bill, p.Person.Id);
+            }).ToList());
             _splitThatBillContext.Entry(bill).State = EntityState.Modified;
 
             return await _splitThatBillContext.SaveChangesAsync() > 0;
+        }
+
+        private void RemoveParticipants(Bill bill, List<BillParticipantFormModel> billParticipants)
+        {
+            var participantsToRemove = bill.Participants.Select(item => item.Id)
+                .Except(billParticipants.Select(item => item.Id)).ToList();
+
+            foreach (var id in participantsToRemove)
+            {
+                bill.RemoveParticipant(p => p.Id == id);
+            }
         }
 
         private void RemoveExtraCharges(Bill bill, List<ExtraChargeFormModel> extraCharges)

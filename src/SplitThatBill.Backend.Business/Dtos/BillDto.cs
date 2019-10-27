@@ -11,6 +11,7 @@ namespace SplitThatBill.Backend.Business.Dtos
         public string BillDate { get; private set; }
         public string Remarks { get; private set; }
         public List<BillItemDto> BillItems { get; private set; }
-        public List<ExtraChargeDto> ExtraCharges { get; set; }
+        public List<ExtraChargeDto> ExtraCharges { get; private set; }
+        public List<BillParticipantDto> Participants { get; private set; }
     }
 }

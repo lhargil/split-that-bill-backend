@@ -30,15 +30,5 @@
             BillItem = billItem;
             PayableUnitPrice = payableUnitPrice;
         }
-        public void Update(Person person, BillItem billItem, decimal payableUnitPrice)
-        {
-            Person = person;
-            BillItem = billItem;
-            PayableUnitPrice = payableUnitPrice;
-        }
-        public void Update(decimal payableUnitPrice)
-        {
-            PayableUnitPrice = payableUnitPrice;
-        }
     }
 }

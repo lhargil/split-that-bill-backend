@@ -12,14 +12,16 @@ namespace SplitThatBill.Backend.Core.Entities
         public string EstablishmentName { get; private set; }
         public DateTime BillDate { get; private set; }
         public string Remarks { get; set; }
+        public Person BillTaker { get; set; }
         public List<BillItem> BillItems { get; private set; }
         public List<ExtraCharge> ExtraCharges { get; private set; }
-        public Person BillTaker { get; set; }
+        public List<BillParticipant> Participants { get; private set; }
 
         private Bill()
         {
             BillItems = new List<BillItem>();
             ExtraCharges = new List<ExtraCharge>();
+            Participants = new List<BillParticipant>();
         }
 
         public Bill(string establishmentName, DateTime billDate, Person billTaker) : this()
@@ -55,6 +57,11 @@ namespace SplitThatBill.Backend.Core.Entities
             BillDate = billDate;
             BillItems = billItems;
             ExtraCharges = extraCharges;
+        }
+
+        public void UpdateParticipants(List<BillParticipant> participants)
+        {
+            Participants = participants;
         }
 
         public void AddBillItem(string description, decimal unitPrice)
@@ -104,6 +111,26 @@ namespace SplitThatBill.Backend.Core.Entities
         public decimal GetTotalCharges()
         {
             return ExtraCharges.Sum(s => s.Rate);
+        }
+
+        public void AddParticipant(Person person)
+        {
+            Participants.Add(new BillParticipant(this, person));
+        }
+
+        public void RemoveParticipant(Person person)
+        {
+            RemoveParticipant(person.Id);
+        }
+
+        public void RemoveParticipant(int personId)
+        {
+            RemoveParticipant(item => item.PersonId == personId && item.BillId == Id);
+        }
+
+        public void RemoveParticipant(Predicate<BillParticipant> filterExpression)
+        {
+            Participants.RemoveAll(filterExpression);
         }
     }
 }

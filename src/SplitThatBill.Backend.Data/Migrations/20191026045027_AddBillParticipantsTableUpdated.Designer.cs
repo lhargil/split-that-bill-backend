@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SplitThatBill.Backend.Data;
 
 namespace SplitThatBill.Backend.Data.Migrations
 {
     [DbContext(typeof(SplitThatBillContext))]
-    partial class SplitThatBillContextModelSnapshot : ModelSnapshot
+    [Migration("20191026045027_AddBillParticipantsTableUpdated")]
+    partial class AddBillParticipantsTableUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

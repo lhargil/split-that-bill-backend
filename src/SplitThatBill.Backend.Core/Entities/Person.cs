@@ -10,14 +10,17 @@ namespace SplitThatBill.Backend.Core.Entities
         public string Firstname { get; private set; }
         public string Lastname { get; private set; }
         public string Fullname { get => $"{Firstname} {Lastname}"; }
-        public List<PersonBillItem> PersonBillItems { get; private set; }
-        public List<PaymentDetail> PaymentDetails { get; private set; }
         public Bill Bill { get; private set; }
         public int? BillId { get; private set; }
+        public List<PersonBillItem> PersonBillItems { get; private set; }
+        public List<PaymentDetail> PaymentDetails { get; private set; }
+        public List<BillParticipant> Participants { get; private set; }
+
         private Person()
         {
             PersonBillItems = new List<PersonBillItem>();
             PaymentDetails = new List<PaymentDetail>();
+            Participants = new List<BillParticipant>();
         }
         public Person(string firstname, string lastname) : this()
         {
