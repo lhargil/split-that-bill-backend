@@ -11,7 +11,7 @@ using SplitThatBill.Backend.Data;
 
 namespace SplitThatBill.Backend.Business.Handlers.Billing
 {
-    public class UpdateBillingRequestHandler : IRequestHandler<UpdateBillingRequest, int>
+    public class UpdateBillingRequestHandler : IRequestHandler<UpdatePersonBillingRequest, int>
     {
         private readonly SplitThatBillContext _splitThatBillContext;
         private readonly IMapper _mapper;
@@ -22,11 +22,11 @@ namespace SplitThatBill.Backend.Business.Handlers.Billing
             _mapper = mapper;
         }
 
-        public async Task<int> Handle(UpdateBillingRequest request, CancellationToken cancellationToken)
+        public async Task<int> Handle(UpdatePersonBillingRequest request, CancellationToken cancellationToken)
         {
             var person = await _splitThatBillContext.People
                 .Include(i => i.PersonBillItems)
-                .FirstOrDefaultAsync(p => p.Id == request.PersonBilling.Person.Id);
+                .FirstOrDefaultAsync(p => p.Id == request.PersonId);
 
             if (null == person)
             {
@@ -38,7 +38,6 @@ namespace SplitThatBill.Backend.Business.Handlers.Billing
 
             toRemove.ForEach(item =>
             {
-                // person.RemoveBillItem(item.BillItemId);
                 _splitThatBillContext.Entry<PersonBillItem>(item).State = EntityState.Deleted;
             });
 
@@ -46,7 +45,7 @@ namespace SplitThatBill.Backend.Business.Handlers.Billing
             {
                 if (!person.PersonBillItems.Any(pb => pb.BillItemId == item.Id))
                 {
-                    var billItem = _mapper.Map<BillItem>(item); // bill.BillItems.Find(bi => bi.Id == item.Id);
+                    var billItem = _mapper.Map<BillItem>(item);
                     _splitThatBillContext.Attach<BillItem>(billItem);
                     person.AddBillItem(billItem, item.Amount);
                 }

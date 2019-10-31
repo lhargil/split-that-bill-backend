@@ -101,21 +101,29 @@ namespace SplitThatBill.Backend.Core.Entities
 
         public decimal GetBillTotal()
         {
-            var totalCharges = GetTotalCharges();
-            var totalBillAmountWithoutCharges = BillItems.Aggregate(0.0M, (acc, bill) => acc + bill.UnitPrice);
-            var totalBillAmount = totalBillAmountWithoutCharges + (totalBillAmountWithoutCharges * totalCharges);
-
-            return totalBillAmount;
+            var totalCharges = GetTotalChargeRates();
+            var totalBillAmountWithoutCharges = GetBillTotalWithoutCharges();
+            return totalBillAmountWithoutCharges + (totalBillAmountWithoutCharges * totalCharges);
         }
 
-        public decimal GetTotalCharges()
+        public decimal GetTotalChargeRates()
         {
             return ExtraCharges.Sum(s => s.Rate);
+        }
+
+        public decimal GetBillTotalWithoutCharges()
+        {
+            return BillItems.Aggregate(0.0M, (acc, bill) => acc + bill.UnitPrice);
         }
 
         public void AddParticipant(Person person)
         {
             Participants.Add(new BillParticipant(this, person));
+        }
+
+        public void AddParticipant(int personId)
+        {
+            Participants.Add(new BillParticipant(this, personId));
         }
 
         public void RemoveParticipant(Person person)

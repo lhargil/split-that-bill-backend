@@ -13,5 +13,8 @@ namespace SplitThatBill.Backend.Business.Dtos
         public List<BillItemDto> BillItems { get; private set; }
         public List<ExtraChargeDto> ExtraCharges { get; private set; }
         public List<BillParticipantDto> Participants { get; private set; }
+        public decimal BillTotal { get; set; }
+        public decimal BillTotalWithoutCharges { get; set; }
+        public decimal TotalCharges { get; set; }
     }
 }

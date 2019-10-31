@@ -24,9 +24,15 @@ namespace SplitThatBill.Backend.Business.Handlers
 
         public async Task<BillDto> Handle(CreateBillRequest request, CancellationToken cancellationToken)
         {
-            var billToCreate = _mapper.Map<Bill>(request.BillFormModel);
+            var billToCreate = new Bill(request.BillFormModel.EstablishmentName, request.BillFormModel.BillDate, null);
             billToCreate.SetBillItems(request.BillFormModel.BillItems.Select(item => new BillItem(item.Description, item.Amount)).ToList());
             billToCreate.SetExtraCharges(request.BillFormModel.ExtraCharges.Select(item => new Core.OwnedEntities.ExtraCharge(item.Description, item.Rate)).ToList());
+
+            request.BillFormModel.Participants.ForEach(participant =>
+            {
+                billToCreate.AddParticipant(participant.Person.Id);
+            });
+
             _splitThatBillContext.Add(billToCreate);
 
             await _splitThatBillContext.SaveChangesAsync();

@@ -11,7 +11,7 @@ using SplitThatBill.Backend.Business.Requests.Billing;
 
 namespace SplitThatBill.Backend.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bills/{id}")]
     public class BillingController : Controller
     {
         private readonly IMediator _mediator;
@@ -21,26 +21,19 @@ namespace SplitThatBill.Backend.API.Controllers
             _mediator = mediator;
         }
         // GET: api/values
-        [HttpGet]
+        [HttpGet("billing/{personId}")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
         }
 
-        //// GET api/values/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
         // POST api/values
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody]PersonBillingFormModel personBilling)
+        [HttpPut("billing/{personId}")]
+        public async Task<ActionResult> Put(int personId, [FromBody]PersonBillingFormModel personBilling)
         {
             try
             {
-                var result = await _mediator.Send(new UpdateBillingRequest(personBilling));
+                var result = await _mediator.Send(new UpdatePersonBillingRequest(personId, personBilling));
 
                 return NoContent();
             }

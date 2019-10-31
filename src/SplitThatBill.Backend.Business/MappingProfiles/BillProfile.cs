@@ -9,9 +9,10 @@ namespace SplitThatBill.Backend.Business.MappingProfiles
         public BillProfile()
         {
             CreateMap<Bill, BillDto>()
-                .ForMember(m => m.Remarks, cfg => cfg.NullSubstitute(string.Empty));
-            CreateMap<BillFormModel, Bill>()
-                .ForMember(m => m.Id, cfg => cfg.Ignore());
+                .ForMember(m => m.Remarks, cfg => cfg.NullSubstitute(string.Empty))
+                .ForMember(m => m.BillTotal, cfg => cfg.MapFrom(item => item.GetBillTotal()))
+                .ForMember(m => m.BillTotalWithoutCharges, cfg => cfg.MapFrom(item => item.GetBillTotalWithoutCharges()))
+                .ForMember(m => m.TotalCharges, cfg => cfg.MapFrom(item => item.GetTotalChargeRates()));
         }
     }
 }

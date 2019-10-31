@@ -41,6 +41,7 @@ namespace SplitThatBill.Backend.Data
                         billITem2
                     });
                 bill.AddParticipant(person3);
+                bill.AddParticipant(person2);
 
                 var extraCharge1 = new Core.OwnedEntities.ExtraCharge("Service charge", 0.10M);
                 var extraCharge2 = new Core.OwnedEntities.ExtraCharge("SST", 0.06M);
