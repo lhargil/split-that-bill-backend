@@ -43,6 +43,7 @@ namespace SplitThatBill.Backend.API.Controllers
             }
         }
 
+        //TODO: deprecated, should be deleted. This is moved to billingsController
         [HttpGet("{id}/items")]
         public async Task<ActionResult<PersonBillItemsDto>> GetPersonBillItems(int id)
         {

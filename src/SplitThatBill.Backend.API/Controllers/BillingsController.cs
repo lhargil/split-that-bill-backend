@@ -12,24 +12,49 @@ using SplitThatBill.Backend.Business.Requests.Billing;
 namespace SplitThatBill.Backend.API.Controllers
 {
     [Route("api/bills/{id}")]
-    public class BillingController : Controller
+    public class BillingsController : Controller
     {
         private readonly IMediator _mediator;
 
-        public BillingController(IMediator mediator)
+        public BillingsController(IMediator mediator)
         {
             _mediator = mediator;
         }
-        // GET: api/values
-        [HttpGet("billing/{personId}")]
-        public IEnumerable<string> Get()
+
+        [HttpGet("billings")]
+        public async Task<ActionResult> GetBillings(int id)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var result = await _mediator.Send(new GetBillingsRequest(id));
+
+                return Ok(result);
+            }
+            catch (NullReferenceException nex)
+            {
+                return NotFound(nex.Message);
+            }
+        }
+
+        // GET: api/values
+        [HttpGet("billings/{personId}")]
+        public async Task<ActionResult<PersonBillItemsDto>> GetPersonBillings(int id, int personId)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetPersonBillingRequest(personId));
+
+                return Ok(result);
+            }
+            catch (NullReferenceException nex)
+            {
+                return NotFound(nex.Message);
+            }
         }
 
         // POST api/values
-        [HttpPut("billing/{personId}")]
-        public async Task<ActionResult> Put(int personId, [FromBody]PersonBillingFormModel personBilling)
+        [HttpPut("billings/{personId}")]
+        public async Task<ActionResult> Put(int id, int personId, [FromBody]PersonBillingFormModel personBilling)
         {
             try
             {
@@ -46,17 +71,5 @@ namespace SplitThatBill.Backend.API.Controllers
                 return NotFound(nex.Message);
             }
         }
-
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
