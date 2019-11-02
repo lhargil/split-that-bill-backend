@@ -28,6 +28,7 @@ namespace SplitThatBill.Backend.Business.Handlers
                 .Include(i => i.BillItems)
                 .Include(i => i.Participants)
                     .ThenInclude(j => j.Person)
+                        .ThenInclude(p => p.PersonBillItems)
                 .FirstOrDefault(item => item.Id == request.BillId);
 
             if (null == bill)

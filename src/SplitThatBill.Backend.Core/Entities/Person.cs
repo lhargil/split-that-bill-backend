@@ -1,6 +1,7 @@
 ﻿using SplitThatBill.Backend.Core.OwnedEntities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SplitThatBill.Backend.Core.Entities
 {
@@ -31,6 +32,10 @@ namespace SplitThatBill.Backend.Core.Entities
         {
             Firstname = firstname;
             Lastname = lastname;
+        }
+        public decimal TotalPayable()
+        {
+            return PersonBillItems.Aggregate(0.0M, (acc, personBill) => acc + (personBill.PayableUnitPrice * personBill.BillItem.Bill.GetTotalChargeRates() + personBill.PayableUnitPrice));
         }
         public void AddBillItem(BillItem billItem, decimal payableUnitPrice)
         {

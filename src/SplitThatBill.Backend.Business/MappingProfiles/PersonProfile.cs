@@ -7,11 +7,12 @@ using SplitThatBill.Backend.Core.Entities;
 
 namespace SplitThatBill.Backend.Business.MappingProfiles
 {
-    public class PersonProfile: Profile
+    public class PersonProfile : Profile
     {
         public PersonProfile()
         {
-            CreateMap<Person, PersonDto>();
+            CreateMap<Person, PersonDto>()
+                .ForMember(m => m.TotalPayable, cfg => cfg.MapFrom(i => i.TotalPayable()));
         }
     }
 }

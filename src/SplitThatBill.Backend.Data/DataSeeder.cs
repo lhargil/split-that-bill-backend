@@ -11,6 +11,7 @@ namespace SplitThatBill.Backend.Data
     {
         private readonly SplitThatBillContext _splitThatBillContext;
         private readonly IDateTimeManager _dateTimeManager;
+        private readonly IContextData _contextData;
 
         public DataSeeder(SplitThatBillContext splitThatBillContext, IDateTimeManager dateTimeManager)
         {
@@ -36,7 +37,6 @@ namespace SplitThatBill.Backend.Data
                 var billITem2 = new BillItem("Ayam goreng", 7.0M);
                 var bill = new Bill("Sri Ayutthaya",
                     _dateTimeManager.Today,
-                    null,
                     new List<BillItem> {
                         billItem1,
                         billITem2
@@ -55,7 +55,6 @@ namespace SplitThatBill.Backend.Data
                 var billItem3 = new BillItem("Nasi lemak", 10.0M);
                 var billItem4 = new BillItem("Avocado toast", 15.5M);
                 var bill2 = new Bill("Feebay.co", _dateTimeManager.Today,
-                    null,
                     new List<BillItem> {
                         billItem3,
                         billItem4

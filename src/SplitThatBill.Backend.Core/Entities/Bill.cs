@@ -12,7 +12,6 @@ namespace SplitThatBill.Backend.Core.Entities
         public string EstablishmentName { get; private set; }
         public DateTime BillDate { get; private set; }
         public string Remarks { get; set; }
-        public Person BillTaker { get; set; }
         public List<BillItem> BillItems { get; private set; }
         public List<ExtraCharge> ExtraCharges { get; private set; }
         public List<BillParticipant> Participants { get; private set; }
@@ -24,14 +23,13 @@ namespace SplitThatBill.Backend.Core.Entities
             Participants = new List<BillParticipant>();
         }
 
-        public Bill(string establishmentName, DateTime billDate, Person billTaker) : this()
+        public Bill(string establishmentName, DateTime billDate) : this()
         {
             EstablishmentName = establishmentName;
             BillDate = billDate;
-            BillTaker = billTaker;
         }
 
-        public Bill(string establishmentName, DateTime billDate, Person billTaker, List<BillItem> billItems) : this(establishmentName, billDate, billTaker)
+        public Bill(string establishmentName, DateTime billDate, List<BillItem> billItems) : this(establishmentName, billDate)
         {
             BillItems = billItems;
         }
