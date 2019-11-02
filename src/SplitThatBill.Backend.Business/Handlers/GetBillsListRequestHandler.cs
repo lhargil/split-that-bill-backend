@@ -26,6 +26,8 @@ namespace SplitThatBill.Backend.Business.Handlers
         {
             var bills = _splitThatBillContext.Bills
                 .Include(i => i.BillItems)
+                .Include(i => i.Participants)
+                    .ThenInclude(i => i.Person)
                 .ToList();
 
             return Task.FromResult(bills.Select(item => _mapper.Map<BillDto>(item)).ToList());

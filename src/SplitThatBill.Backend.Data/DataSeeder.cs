@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SplitThatBill.Backend.Core.Entities;
 using SplitThatBill.Backend.Core.Interfaces;
+using SplitThatBill.Backend.Core.OwnedEntities;
 
 namespace SplitThatBill.Backend.Data
 {
@@ -35,7 +36,7 @@ namespace SplitThatBill.Backend.Data
                 var billITem2 = new BillItem("Ayam goreng", 7.0M);
                 var bill = new Bill("Sri Ayutthaya",
                     _dateTimeManager.Today,
-                    person1,
+                    null,
                     new List<BillItem> {
                         billItem1,
                         billITem2
@@ -50,6 +51,25 @@ namespace SplitThatBill.Backend.Data
 
                 person2.AddBillItem(billItem1, billItem1.UnitPrice);
                 _splitThatBillContext.Bills.Add(bill);
+
+                var billItem3 = new BillItem("Nasi lemak", 10.0M);
+                var billItem4 = new BillItem("Avocado toast", 15.5M);
+                var bill2 = new Bill("Feebay.co", _dateTimeManager.Today,
+                    null,
+                    new List<BillItem> {
+                        billItem3,
+                        billItem4
+                    });
+                bill2.AddParticipant(person1);
+                bill2.AddParticipant(person2);
+
+                person1.AddBillItem(billItem4, billItem4.UnitPrice);
+                var extraCharge3 = new ExtraCharge("Service charge", 0.10M);
+                var extraCharge4 = new ExtraCharge("SST", 0.06M);
+                bill2.AddExtraCharge(extraCharge3);
+                bill2.AddExtraCharge(extraCharge4);
+
+                _splitThatBillContext.Bills.Add(bill2);
 
                 _splitThatBillContext.SaveChanges();
             }
