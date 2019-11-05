@@ -19,7 +19,7 @@ namespace SplitThatBill.Backend.Data.Configurations
 
             builder
                 .HasOne(p => p.Person)
-                .WithMany(p => p.Participants)
+                .WithMany(p => p.Bills)
                 .HasForeignKey(p => p.PersonId);
 
             builder

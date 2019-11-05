@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SplitThatBill.Backend.Business.Dtos;
-using SplitThatBill.Backend.Business.Requests.Billing;
+using SplitThatBill.Backend.Business.Requests.Billings;
 using SplitThatBill.Backend.Data;
 
-namespace SplitThatBill.Backend.Business.Handlers.Billing
+namespace SplitThatBill.Backend.Business.Handlers.Billings
 {
     public class GetPersonBillingRequestHandler : IRequestHandler<GetPersonBillingRequest, PersonBillItemsDto>
     {

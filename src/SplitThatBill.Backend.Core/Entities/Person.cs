@@ -11,17 +11,15 @@ namespace SplitThatBill.Backend.Core.Entities
         public string Firstname { get; private set; }
         public string Lastname { get; private set; }
         public string Fullname { get => $"{Firstname} {Lastname}"; }
-        public Bill Bill { get; private set; }
-        public int? BillId { get; private set; }
         public List<PersonBillItem> PersonBillItems { get; private set; }
         public List<PaymentDetail> PaymentDetails { get; private set; }
-        public List<BillParticipant> Participants { get; private set; }
+        public List<BillParticipant> Bills { get; private set; }
 
         private Person()
         {
             PersonBillItems = new List<PersonBillItem>();
             PaymentDetails = new List<PaymentDetail>();
-            Participants = new List<BillParticipant>();
+            Bills = new List<BillParticipant>();
         }
         public Person(string firstname, string lastname) : this()
         {
@@ -33,9 +31,11 @@ namespace SplitThatBill.Backend.Core.Entities
             Firstname = firstname;
             Lastname = lastname;
         }
-        public decimal TotalPayable()
+        public decimal GetTotalPayable()
         {
-            return PersonBillItems.Aggregate(0.0M, (acc, personBill) => acc + (personBill.PayableUnitPrice * personBill.BillItem.Bill.GetTotalChargeRates() + personBill.PayableUnitPrice));
+            return PersonBillItems.Where(w => w.BillItem != null)
+                .Aggregate(0.0M, (acc, personBill) => acc + (personBill.PayableUnitPrice *
+                    personBill.BillItem.Bill.GetTotalChargeRates() + personBill.PayableUnitPrice));
         }
         public void AddBillItem(BillItem billItem, decimal payableUnitPrice)
         {

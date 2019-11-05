@@ -9,13 +9,12 @@ namespace SplitThatBill.Backend.Business.Dtos
         public string Firstname { get; private set; }
         public string Lastname { get; private set; }
         public string Fullname { get; private set; }
-        public decimal TotalPayable { get; set; }
-        public PersonDto(int id, string firstname, string lastname, string fullname)
+        public PersonDto(int id, string firstname, string lastname)
         {
             Id = id;
             Firstname = firstname;
             Lastname = lastname;
-            Fullname = fullname;
+            Fullname = $"{firstname} {lastname}";
         }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using SplitThatBill.Backend.Business.Aggregates;
 using SplitThatBill.Backend.Business.Dtos;
-using SplitThatBill.Backend.Business.Requests.Billing;
+using SplitThatBill.Backend.Business.Requests.Billings;
 using SplitThatBill.Backend.Data;
 
-namespace SplitThatBill.Backend.Business.Handlers.Billing
+namespace SplitThatBill.Backend.Business.Handlers.Billings
 {
     public class GetBillingsRequestHandler : IRequestHandler<GetBillingsRequest, BillingDto>
     {
@@ -28,6 +27,7 @@ namespace SplitThatBill.Backend.Business.Handlers.Billing
             var bill = await _splitThatBillContext.Bills
                 .Include(i => i.BillItems)
                     .ThenInclude(i => i.PersonBillItems)
+                        .ThenInclude(i => i.Person)
                 .Include(i => i.Participants)
                     .ThenInclude(i => i.Person)
                 .FirstOrDefaultAsync(item => item.Id == request.BillId);
@@ -36,11 +36,9 @@ namespace SplitThatBill.Backend.Business.Handlers.Billing
             {
                 throw new NullReferenceException("The bill does not exist.");
             }
+            var billing = new Billing(bill, _mapper);
 
-            var billing = new BillingDto(_mapper.Map<BillDto>(bill));
-            billing.PeopleBilling = bill.Participants.Select(p => new PersonBillItemsDto(p.Person)).ToList();
-
-            return billing;
+            return billing.ToDto();
         }
     }
 }

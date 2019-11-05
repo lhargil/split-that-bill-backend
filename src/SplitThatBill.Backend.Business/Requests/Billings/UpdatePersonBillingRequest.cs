@@ -2,7 +2,7 @@
 using MediatR;
 using SplitThatBill.Backend.Business.Dtos;
 
-namespace SplitThatBill.Backend.Business.Requests.Billing
+namespace SplitThatBill.Backend.Business.Requests.Billings
 {
     public class UpdatePersonBillingRequest : IRequest<int>
     {

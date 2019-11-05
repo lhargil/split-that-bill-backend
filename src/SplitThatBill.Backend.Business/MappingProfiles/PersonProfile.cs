@@ -11,8 +11,7 @@ namespace SplitThatBill.Backend.Business.MappingProfiles
     {
         public PersonProfile()
         {
-            CreateMap<Person, PersonDto>()
-                .ForMember(m => m.TotalPayable, cfg => cfg.MapFrom(i => i.TotalPayable()));
+            CreateMap<Person, PersonDto>();
         }
     }
 }

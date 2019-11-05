@@ -11,7 +11,6 @@ namespace SplitThatBill.Backend.Data
     {
         private readonly SplitThatBillContext _splitThatBillContext;
         private readonly IDateTimeManager _dateTimeManager;
-        private readonly IContextData _contextData;
 
         public DataSeeder(SplitThatBillContext splitThatBillContext, IDateTimeManager dateTimeManager)
         {

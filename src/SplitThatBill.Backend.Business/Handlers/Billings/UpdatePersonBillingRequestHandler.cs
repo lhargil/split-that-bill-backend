@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SplitThatBill.Backend.Business.Requests.Billing;
+using SplitThatBill.Backend.Business.Requests.Billings;
 using SplitThatBill.Backend.Core.Entities;
 using SplitThatBill.Backend.Data;
 
-namespace SplitThatBill.Backend.Business.Handlers.Billing
+namespace SplitThatBill.Backend.Business.Handlers.Billings
 {
     public class UpdateBillingRequestHandler : IRequestHandler<UpdatePersonBillingRequest, int>
     {

@@ -23,6 +23,11 @@ namespace SplitThatBill.Backend.Core.ValueObjects
             return $"{Currency} {roundedAmount.ToString("G")}";
         }
 
+        public static Money Create(decimal total)
+        {
+            return new Money(total);
+        }
+
         private decimal RoundToTwoDecimals(decimal amount)
         {
             return Math.Round(amount, 2, MidpointRounding.AwayFromZero);
