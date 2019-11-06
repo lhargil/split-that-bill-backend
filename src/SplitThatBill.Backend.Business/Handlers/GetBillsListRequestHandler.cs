@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
+using SplitThatBill.Backend.Core.Interfaces;
 using SplitThatBill.Backend.Data;
 
 namespace SplitThatBill.Backend.Business.Handlers
@@ -15,12 +16,15 @@ namespace SplitThatBill.Backend.Business.Handlers
     {
         private readonly SplitThatBillContext _splitThatBillContext;
         private readonly IMapper _mapper;
+        private readonly IContextData _contextData;
 
         public GetBillsListRequestHandler(SplitThatBillContext splitThatBillContext,
-          IMapper mapper)
+          IMapper mapper,
+          IContextData contextData)
         {
             _splitThatBillContext = splitThatBillContext;
             _mapper = mapper;
+            _contextData = contextData;
         }
         public Task<List<BillDto>> Handle(GetBillsRequest request, CancellationToken cancellationToken)
         {
@@ -28,6 +32,7 @@ namespace SplitThatBill.Backend.Business.Handlers
                 .Include(i => i.BillItems)
                 .Include(i => i.Participants)
                     .ThenInclude(i => i.Person)
+                .Where(w => w.BillTakerId == _contextData.CurrentUser.Id)
                 .ToList();
 
             return Task.FromResult(bills.Select(item => _mapper.Map<BillDto>(item)).ToList());

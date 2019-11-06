@@ -15,6 +15,8 @@ namespace SplitThatBill.Backend.Core.Entities
         public List<BillItem> BillItems { get; private set; }
         public List<ExtraCharge> ExtraCharges { get; private set; }
         public List<BillParticipant> Participants { get; private set; }
+        public int? BillTakerId { get; private set; }
+        public Person BillTaker { get; private set; }
 
         private Bill()
         {
@@ -137,6 +139,11 @@ namespace SplitThatBill.Backend.Core.Entities
         public void RemoveParticipant(Predicate<BillParticipant> filterExpression)
         {
             Participants.RemoveAll(filterExpression);
+        }
+
+        public void UpdateBillTaker(Person person)
+        {
+            BillTaker = person;
         }
     }
 }

@@ -22,6 +22,11 @@ namespace SplitThatBill.Backend.Data.Configurations
                 .WithOne(p => p.Bill)
                 .HasForeignKey(p => p.BillId);
 
+            builder
+                .HasOne(p => p.BillTaker)
+                .WithMany(p => p.BillsTaken)
+                .HasForeignKey(p => p.BillTakerId);
+
             // Owned entities
             builder.OwnsMany(p => p.ExtraCharges, a =>
             {

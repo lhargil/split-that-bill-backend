@@ -43,12 +43,14 @@ namespace SplitThatBill.Backend.Data
                 bill.AddParticipant(person3);
                 bill.AddParticipant(person2);
 
-                var extraCharge1 = new Core.OwnedEntities.ExtraCharge("Service charge", 0.10M);
-                var extraCharge2 = new Core.OwnedEntities.ExtraCharge("SST", 0.06M);
+                var extraCharge1 = new ExtraCharge("Service charge", 0.10M);
+                var extraCharge2 = new ExtraCharge("SST", 0.06M);
                 bill.AddExtraCharge(extraCharge1);
                 bill.AddExtraCharge(extraCharge2);
 
                 person2.AddBillItem(billItem1, billItem1.UnitPrice);
+                bill.UpdateBillTaker(person1);
+
                 _splitThatBillContext.Bills.Add(bill);
 
                 var billItem3 = new BillItem("Nasi lemak", 10.0M);

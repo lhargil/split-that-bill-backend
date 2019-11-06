@@ -14,6 +14,7 @@ namespace SplitThatBill.Backend.Core.Entities
         public List<PersonBillItem> PersonBillItems { get; private set; }
         public List<PaymentDetail> PaymentDetails { get; private set; }
         public List<BillParticipant> Bills { get; private set; }
+        public List<Bill> BillsTaken { get; private set; }
 
         private Person()
         {
