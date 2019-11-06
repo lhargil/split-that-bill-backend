@@ -26,6 +26,10 @@ namespace SplitThatBill.Backend.Core.Entities
             Firstname = firstname;
             Lastname = lastname;
         }
+        public Person(int id, string firstname, string lastname) : this(firstname, lastname)
+        {
+            Id = id;
+        }
         public void Update(string firstname, string lastname)
         {
             Firstname = firstname;

@@ -55,18 +55,18 @@ namespace SplitThatBill.Backend.Data
                 e.State == EntityState.Deleted))
             {
                 var today = _dateTimeManager.Today;
-                var currentUser = _contextData.CurrentUser;
+                var currentUser = _contextData.CurrentUser ?? null;
 
                 if (entry.Metadata.FindProperty("DateModified") == null)
                 {
                     continue;
                 }
                 entry.Property("DateModified").CurrentValue = today;
-                entry.Property("ModifiedBy").CurrentValue = currentUser;
+                entry.Property("ModifiedBy").CurrentValue = currentUser?.Fullname;
                 if (entry.State == EntityState.Added)
                 {
                     entry.Property("DateCreated").CurrentValue = today;
-                    entry.Property("CreatedBy").CurrentValue = currentUser;
+                    entry.Property("CreatedBy").CurrentValue = currentUser?.Fullname;
                 }
 
                 if (entry.State == EntityState.Deleted)
