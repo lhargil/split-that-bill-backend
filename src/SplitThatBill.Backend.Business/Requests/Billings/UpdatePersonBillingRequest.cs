@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MediatR;
 using SplitThatBill.Backend.Business.Dtos;
 

@@ -38,7 +38,7 @@ namespace SplitThatBill.Backend.Business.Handlers.Billings
 
             toRemove.ForEach(item =>
             {
-                _splitThatBillContext.Entry<PersonBillItem>(item).State = EntityState.Deleted;
+                _splitThatBillContext.Entry(item).State = EntityState.Deleted;
             });
 
             request.PersonBilling.BillItems.ForEach(item =>
@@ -46,7 +46,7 @@ namespace SplitThatBill.Backend.Business.Handlers.Billings
                 if (!person.PersonBillItems.Any(pb => pb.BillItemId == item.Id))
                 {
                     var billItem = _mapper.Map<BillItem>(item);
-                    _splitThatBillContext.Attach<BillItem>(billItem);
+                    _splitThatBillContext.Attach(billItem);
                     person.AddBillItem(billItem, item.Amount);
                 }
             });
