@@ -41,6 +41,8 @@ namespace SplitThatBill.Backend.Business.Handlers
             RemoveExtraCharges(bill, request.BillFormModel.ExtraCharges);
             RemoveBillItems(bill, request.BillFormModel.BillItems);
             RemoveParticipants(bill, request.BillFormModel.Participants);
+
+            bill.Remarks = request.BillFormModel.Remarks;
             bill.Update(request.BillFormModel.EstablishmentName,
                 request.BillFormModel.BillDate,
                 request.BillFormModel.BillItems.Select(item =>

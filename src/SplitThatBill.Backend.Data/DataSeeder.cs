@@ -23,6 +23,7 @@ namespace SplitThatBill.Backend.Data
             var person1 = new Person("lhar", "gil");
             var person2 = new Person("jon", "snow");
             var person3 = new Person("raffy", "tulfo");
+
             if (!_splitThatBillContext.People.Any())
             {
                 _splitThatBillContext.People.Add(person1);
@@ -68,6 +69,8 @@ namespace SplitThatBill.Backend.Data
                 var extraCharge4 = new ExtraCharge("SST", 0.06M);
                 bill2.AddExtraCharge(extraCharge3);
                 bill2.AddExtraCharge(extraCharge4);
+
+                bill2.UpdateBillTaker(person1);
 
                 _splitThatBillContext.Bills.Add(bill2);
 
