@@ -58,5 +58,29 @@ namespace SplitThatBill.Backend.Core.Entities
         {
             PersonBillItems.RemoveAll(filterExpression);
         }
+
+        public void AddPaymentDetail(PaymentDetail paymentDetail)
+        {
+            PaymentDetails.Add(paymentDetail);
+        }
+        public void UpdatePaymentDetail(int id, PaymentDetail paymentDetail)
+        {
+            var paymentDetailToUpdate = PaymentDetails.FirstOrDefault(p => p.Id == id);
+
+            if (null == paymentDetailToUpdate)
+            {
+                throw new NullReferenceException("The payment detail does not exist.");
+            }
+
+            paymentDetailToUpdate.Update(paymentDetail.BankName, paymentDetail.AccountNumber, paymentDetail.AccountName);
+        }
+        public void RemovePaymentDetail(int id)
+        {
+            RemovePaymentDetail(p => p.Id == id);
+        }
+        public void RemovePaymentDetail(Predicate<PaymentDetail> filterExpression)
+        {
+            PaymentDetails.RemoveAll(filterExpression);
+        }
     }
 }

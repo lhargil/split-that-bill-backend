@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SplitThatBill.Backend.Business.Dtos
@@ -15,6 +16,11 @@ namespace SplitThatBill.Backend.Business.Dtos
             Firstname = firstname;
             Lastname = lastname;
             Fullname = $"{firstname} {lastname}";
+        }
+        public List<PaymentDetailDto> PaymentDetails { get; set; }
+        public PersonDto()
+        {
+            PaymentDetails = new List<PaymentDetailDto>();
         }
     }
 }

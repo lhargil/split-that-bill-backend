@@ -52,7 +52,8 @@ namespace SplitThatBill.Backend.API
                     builder
                         .AllowAnyOrigin()
                         .AllowAnyHeader()
-                        .AllowAnyMethod();
+                        .AllowAnyMethod()
+                        .WithExposedHeaders(new[] { "Location" });
                 });
             });
 

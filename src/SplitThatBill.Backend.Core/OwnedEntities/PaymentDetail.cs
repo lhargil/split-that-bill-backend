@@ -6,7 +6,7 @@ namespace SplitThatBill.Backend.Core.OwnedEntities
     {
         public int Id { get; private set; }
         public int PersonId { get; private set; }
-        public Person Person { get; set; }
+        public Person Person { get; private set; }
         public string BankName { get; private set; }
         public string AccountNumber { get; private set; }
         public string AccountName { get; private set; }
@@ -14,11 +14,21 @@ namespace SplitThatBill.Backend.Core.OwnedEntities
         {
 
         }
-        public PaymentDetail(string bankName, string accountNumber, string accountName)
+        private PaymentDetail(string bankName, string accountNumber, string accountName)
         {
             BankName = bankName;
             AccountNumber = accountNumber;
             AccountName = accountName;
+        }
+        public void Update(string bankName, string accountNumber, string accountName)
+        {
+            BankName = bankName;
+            AccountNumber = accountNumber;
+            AccountName = accountName;
+        }
+        public static PaymentDetail Create(string bankName, string accountNumber, string accountName)
+        {
+            return new PaymentDetail(bankName, accountNumber, accountName);
         }
     }
 }

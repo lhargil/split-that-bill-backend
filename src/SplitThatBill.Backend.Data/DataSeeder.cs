@@ -21,6 +21,8 @@ namespace SplitThatBill.Backend.Data
         public void Seed()
         {
             var person1 = new Person("lhar", "gil");
+            person1.AddPaymentDetail(PaymentDetail.Create("Maybank", "34532156778", "Lhar Gil"));
+
             var person2 = new Person("jon", "snow");
             var person3 = new Person("raffy", "tulfo");
 
@@ -43,6 +45,7 @@ namespace SplitThatBill.Backend.Data
                     });
                 bill.AddParticipant(person3);
                 bill.AddParticipant(person2);
+                bill.AddParticipant(person1);
 
                 var extraCharge1 = new ExtraCharge("Service charge", 0.10M);
                 var extraCharge2 = new ExtraCharge("SST", 0.06M);

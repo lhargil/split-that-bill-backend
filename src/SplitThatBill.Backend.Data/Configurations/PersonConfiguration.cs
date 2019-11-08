@@ -27,8 +27,9 @@ namespace SplitThatBill.Backend.Data.Configurations
             builder.OwnsMany(p => p.PaymentDetails, a =>
             {
                 a.HasForeignKey(p => p.PersonId);
-                a.Property(p => p.Id);
-                a.HasKey(p => new { p.PersonId, p.Id });
+                a.Property(p => p.Id)
+                    .ValueGeneratedOnAdd();
+                a.HasKey(p => p.Id);
             });
 
             base.Configure(builder);

@@ -22,4 +22,7 @@
     <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />
     <ProjectReference Include="..\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Requests\People\GetPaymentDetailsRequest.json" />
+  </ItemGroup>
 </Project>
