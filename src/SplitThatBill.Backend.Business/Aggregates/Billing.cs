@@ -1,14 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using AutoMapper;
+using NodaTime;
+using NodaTime.Text;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Core.Entities;
+using SplitThatBill.Backend.Core.Interfaces;
 
 namespace SplitThatBill.Backend.Business.Aggregates
 {
     public class Billing
     {
-        public Billing(Bill bill, IMapper mapper)
+        public Billing(Bill bill, IMapper mapper, IDateTimeManager dateTimeManager)
         {
             TotalBillWithCharges = bill.GetBillTotal();
             TotalCharges = bill.GetTotalChargeRates();
@@ -41,6 +46,8 @@ namespace SplitThatBill.Backend.Business.Aggregates
                             return acc + (curr.PayableUnitPrice * bill.GetTotalChargeRates() + curr.PayableUnitPrice);
                         })
                     )).ToList(),
+                BillDate = dateTimeManager.ConvertUTCToLocal(Instant.FromDateTimeUtc(DateTime.SpecifyKind(bill.BillDate, DateTimeKind.Utc))),
+                ExtraCharges = bill.ExtraCharges.Select(ec => mapper.Map<ExtraChargeDto>(ec)).ToList(),
                 BillTotal = bill.GetBillTotal(),
                 BillTotalWithoutCharges = bill.GetBillTotalWithoutCharges(),
                 TotalCharges = bill.GetTotalChargeRates()

@@ -8,4 +8,7 @@
     <Folder Include="ValueObjects\" />
     <Folder Include="OwnedEntities\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NodaTime" Version="2.4.7" />
+  </ItemGroup>
 </Project>

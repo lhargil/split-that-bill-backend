@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
+using SplitThatBill.Backend.Business.Requests.Billings;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,16 +30,20 @@ namespace SplitThatBill.Backend.API.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BillDto>> Get(int id)
+        public async Task<ActionResult<BillingDto>> Get(int id)
         {
             try
             {
-                var bill = await _mediator.Send(new GetSingleBillRequest(id));
-                return bill;
+                var billing = await _mediator.Send(new GetBillingsRequest(id));
+                return billing;
             }
             catch (NullReferenceException nullRefException)
             {
                 return NotFound(nullRefException.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
