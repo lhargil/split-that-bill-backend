@@ -30,7 +30,7 @@ namespace SplitThatBill.Backend.Data.Configurations
             // Owned entities
             builder.OwnsMany(p => p.ExtraCharges, a =>
             {
-                a.HasForeignKey("BillId");
+                a.WithOwner().HasForeignKey("BillId");
                 a.Property(p => p.Id).ValueGeneratedOnAdd();
                 a.HasKey(p => p.Id);
             });

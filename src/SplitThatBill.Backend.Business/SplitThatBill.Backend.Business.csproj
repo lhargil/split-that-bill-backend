@@ -1,29 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Class1.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MediatR" Version="7.0.0" />
-    <PackageReference Include="AutoMapper" Version="9.0.0" />
-    <PackageReference Include="FluentValidation" Version="8.4.0" />
-    <PackageReference Include="NodaTime" Version="2.4.7" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Validators\" />
-    <Folder Include="Requests\Billings\" />
-    <Folder Include="Handlers\Billings\" />
-    <Folder Include="Aggregates\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />
-    <ProjectReference Include="..\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Requests\People\GetPaymentDetailsRequest.json" />
-  </ItemGroup>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Remove="Class1.cs" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="MediatR" Version="7.0.0" />
+        <PackageReference Include="AutoMapper" Version="9.0.0" />
+        <PackageReference Include="FluentValidation" Version="8.5.1" />
+        <PackageReference Include="NodaTime" Version="2.4.7" />
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Validators\" />
+        <Folder Include="Requests\Billings\" />
+        <Folder Include="Handlers\Billings\" />
+        <Folder Include="Aggregates\" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />
+        <ProjectReference Include="..\SplitThatBill.Backend.Data\SplitThatBill.Backend.Data.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="Requests\People\GetPaymentDetailsRequest.json" />
+    </ItemGroup>
 </Project>

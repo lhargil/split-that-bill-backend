@@ -20,6 +20,7 @@ using System;
 using SplitThatBill.Backend.Business.MappingProfiles;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Hosting;
 
 namespace SplitThatBill.Backend.API
 {
@@ -40,9 +41,7 @@ namespace SplitThatBill.Backend.API
             services.AddDbContext<SplitThatBillContext>(options =>
             {
                 options.UseMySql(Configuration.GetConnectionString("SplitThatBillDb"),
-                    config => config.MigrationsAssembly("SplitThatBill.Backend.Data"))
-                .ConfigureWarnings(warnings =>
-                    warnings.Throw(RelationalEventId.QueryClientEvaluationWarning));
+                    config => config.MigrationsAssembly("SplitThatBill.Backend.Data"));
             });
 
             services.AddCors(options =>
@@ -60,9 +59,13 @@ namespace SplitThatBill.Backend.API
             services.AddRouting(opts => opts.LowercaseUrls = true);
 
             var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(options =>
+            services
+                .AddMvc(options =>
+                {
+                    options.EnableEndpointRouting = false;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(options =>
                 {
                     // Use camel case properties in the serializer and the spec (optional)
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -93,15 +96,14 @@ namespace SplitThatBill.Backend.API
                 };
             });
 
-            services.AddMediatR(new Assembly[] { businessAssembly });
-            services.AddAutoMapper(businessAssembly);
-
             services.AddScoped<IContextData, RequestContextData>();
+            services.AddMediatR(businessAssembly);
+            services.AddAutoMapper(businessAssembly);
             services.AddTransient<IDateTimeManager, DateTimeManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRequestContextDataMiddleware();
             if (env.IsDevelopment())
