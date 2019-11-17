@@ -28,14 +28,13 @@ namespace SplitThatBill.Backend.API.Controllers
             return Ok(bills);
         }
 
-        // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<BillingDto>> Get(int id)
+        public async Task<ActionResult<BillDto>> Get(int id)
         {
             try
             {
-                var billing = await _mediator.Send(new GetBillingsRequest(id));
-                return billing;
+                var bill = await _mediator.Send(new GetSingleBillRequest(id));
+                return Ok(bill);
             }
             catch (NullReferenceException nullRefException)
             {
