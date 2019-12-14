@@ -21,6 +21,13 @@ using SplitThatBill.Backend.Business.MappingProfiles;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
+using SplitThatBill.Backend.SharedKernel.Models;
 
 namespace SplitThatBill.Backend.API
 {
@@ -37,6 +44,8 @@ namespace SplitThatBill.Backend.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<NswagOptions>(Configuration.GetSection("NSwag"));
+            var auth0ConfigSection = Configuration.GetSection("Auth0");
+            services.Configure<Auth0Config>(auth0ConfigSection);
 
             services.AddDbContext<SplitThatBillContext>(options =>
             {
@@ -57,6 +66,38 @@ namespace SplitThatBill.Backend.API
             });
 
             services.AddRouting(opts => opts.LowercaseUrls = true);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                var auth0Config = new Auth0Config();
+                auth0ConfigSection.Bind(auth0Config);
+
+                options.Authority = $"https://{auth0Config.Domain}/";
+                options.Audience = auth0Config.Audience;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    NameClaimType = ClaimTypes.NameIdentifier
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = context =>
+                    {
+                        if (context.SecurityToken is JwtSecurityToken token)
+                        {
+                            if (context.Principal.Identity is ClaimsIdentity identity)
+                            {
+                                identity.AddClaim(new Claim("access_token", token.RawData));
+                            }
+                        }
+
+                        return Task.FromResult(0);
+                    }
+                };
+            });
 
             var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
             services
@@ -105,7 +146,6 @@ namespace SplitThatBill.Backend.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseRequestContextDataMiddleware();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -116,11 +156,26 @@ namespace SplitThatBill.Backend.API
                 app.UseHsts();
             }
 
-            app.UseCors("AllowAll");
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseCors("AllowAll");
+            app.UseRequestContextDataMiddleware();
             app.UseMvc();
-            app.UseOpenApi();
+            app.UseOpenApi(config =>
+            {
+                config.PostProcess = (document, ctxt) =>
+                {
+                    document.Schemes.Clear();
+                    document.Schemes.Add(NSwag.OpenApiSchema.Https);
+                };
+            });
             app.UseSwaggerUi3();
         }
     }

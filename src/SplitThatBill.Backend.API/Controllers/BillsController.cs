@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
@@ -22,6 +23,7 @@ namespace SplitThatBill.Backend.API.Controllers
         }
         // GET: api/values
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<BillDto>>> Get()
         {
             var bills = await _mediator.Send(new GetBillsRequest());
