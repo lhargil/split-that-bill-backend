@@ -6,11 +6,12 @@ using AutoMapper;
 using MediatR;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
+using SplitThatBill.Backend.Business.Requests.Bills;
 using SplitThatBill.Backend.Core.Entities;
 using SplitThatBill.Backend.Core.Interfaces;
 using SplitThatBill.Backend.Data;
 
-namespace SplitThatBill.Backend.Business.Handlers
+namespace SplitThatBill.Backend.Business.Handlers.Bills
 {
     public class CreateBillRequestHandler : IRequestHandler<CreateBillRequest, BillDto>
     {
@@ -31,8 +32,8 @@ namespace SplitThatBill.Backend.Business.Handlers
         {
             var billToCreate = new Bill(request.BillFormModel.EstablishmentName, request.BillFormModel.BillDate, null);
             billToCreate.Remarks = request.BillFormModel.Remarks;
-            billToCreate.SetBillItems(request.BillFormModel.BillItems.Select(item => new BillItem(item.Description, item.Amount)).ToList());
-            billToCreate.SetExtraCharges(request.BillFormModel.ExtraCharges.Select(item => new Core.OwnedEntities.ExtraCharge(item.Description, item.Rate)).ToList());
+            //billToCreate.SetBillItems(request.BillFormModel.BillItems.Select(item => new BillItem(item.Description, item.Amount)).ToList());
+            //billToCreate.SetExtraCharges(request.BillFormModel.ExtraCharges.Select(item => new Core.OwnedEntities.ExtraCharge(item.Description, item.Rate)).ToList());
 
             request.BillFormModel.Participants.ForEach(participant =>
             {

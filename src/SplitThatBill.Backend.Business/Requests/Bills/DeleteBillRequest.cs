@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace SplitThatBill.Backend.Business.Requests
+namespace SplitThatBill.Backend.Business.Requests.Bills
 {
     public class DeleteBillRequest : IRequest<bool>
     {

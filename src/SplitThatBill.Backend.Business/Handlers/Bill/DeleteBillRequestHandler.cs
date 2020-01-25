@@ -3,9 +3,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using SplitThatBill.Backend.Business.Requests;
+using SplitThatBill.Backend.Business.Requests.Bills;
 using SplitThatBill.Backend.Data;
 
-namespace SplitThatBill.Backend.Business.Handlers
+namespace SplitThatBill.Backend.Business.Handlers.Bills
 {
     public class DeleteBillRequestHandler : IRequestHandler<DeleteBillRequest, bool>
     {

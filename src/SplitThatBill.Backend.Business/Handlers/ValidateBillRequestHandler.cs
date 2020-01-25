@@ -6,6 +6,7 @@ using FluentValidation.Results;
 using MediatR;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
+using SplitThatBill.Backend.Business.Requests.Bills;
 
 namespace SplitThatBill.Backend.Business.Handlers
 {

@@ -17,6 +17,8 @@
         <Folder Include="Requests\Billings\" />
         <Folder Include="Handlers\Billings\" />
         <Folder Include="Aggregates\" />
+        <Folder Include="Requests\Bills\" />
+        <Folder Include="Handlers\Bill\" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />

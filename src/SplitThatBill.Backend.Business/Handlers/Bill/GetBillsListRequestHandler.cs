@@ -7,10 +7,11 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
+using SplitThatBill.Backend.Business.Requests.Bills;
 using SplitThatBill.Backend.Core.Interfaces;
 using SplitThatBill.Backend.Data;
 
-namespace SplitThatBill.Backend.Business.Handlers
+namespace SplitThatBill.Backend.Business.Handlers.Bills
 {
     public class GetBillsListRequestHandler : IRequestHandler<GetBillsRequest, List<BillDto>>
     {

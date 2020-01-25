@@ -8,11 +8,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
+using SplitThatBill.Backend.Business.Requests.Bills;
 using SplitThatBill.Backend.Core.Entities;
 using SplitThatBill.Backend.Core.OwnedEntities;
 using SplitThatBill.Backend.Data;
 
-namespace SplitThatBill.Backend.Business.Handlers
+namespace SplitThatBill.Backend.Business.Handlers.Bills
 {
     public class UpdateBillRequestHandler : IRequestHandler<UpdateBillRequest, bool>
     {

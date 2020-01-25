@@ -14,17 +14,17 @@ namespace SplitThatBill.Backend.Business.Validators
                 .NotEmpty()
                     .WithMessage("The {PropertyName} must not be empty.");
 
-            RuleFor(m => m.BillItems)
-                .Must(BeAtLeastOne)
-                    .WithMessage("There must be at least one bill item in a bill.");
+            //RuleFor(m => m.BillItems)
+            //    .Must(BeAtLeastOne)
+            //        .WithMessage("There must be at least one bill item in a bill.");
 
-            RuleForEach(m => m.BillItems)
-                .SetValidator(new BillItemValidator());
+            //RuleForEach(m => m.BillItems)
+            //    .SetValidator(new BillItemValidator());
         }
 
-        private bool BeAtLeastOne(List<BillItemFormModel> arg)
-        {
-            return arg.Any();
-        }
+        //private bool BeAtLeastOne(List<BillItemFormModel> arg)
+        //{
+        //    return arg.Any();
+        //}
     }
 }
