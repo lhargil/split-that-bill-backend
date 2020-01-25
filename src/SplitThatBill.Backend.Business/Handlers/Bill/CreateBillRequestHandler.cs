@@ -32,8 +32,16 @@ namespace SplitThatBill.Backend.Business.Handlers.Bills
         {
             var billToCreate = new Bill(request.BillFormModel.EstablishmentName, request.BillFormModel.BillDate, null);
             billToCreate.Remarks = request.BillFormModel.Remarks;
-            //billToCreate.SetBillItems(request.BillFormModel.BillItems.Select(item => new BillItem(item.Description, item.Amount)).ToList());
-            //billToCreate.SetExtraCharges(request.BillFormModel.ExtraCharges.Select(item => new Core.OwnedEntities.ExtraCharge(item.Description, item.Rate)).ToList());
+
+            var billItems = request.BillFormModel.BillItems.Select(item =>
+            {
+                var billItem = new BillItem(item.BillItem.Description, item.BillItem.Amount);
+                billItem.AssignPerson(item.PersonId, item.BillItem.Amount);
+                return billItem;
+            }).ToList();
+
+            billToCreate.SetBillItems(billItems);
+            billToCreate.SetExtraCharges(request.BillFormModel.ExtraCharges.Select(item => new Core.OwnedEntities.ExtraCharge(item.Description, item.Rate)).ToList());
 
             request.BillFormModel.Participants.ForEach(participant =>
             {

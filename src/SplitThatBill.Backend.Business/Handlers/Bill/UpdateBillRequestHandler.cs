@@ -40,32 +40,32 @@ namespace SplitThatBill.Backend.Business.Handlers.Bills
             }
 
             RemoveExtraCharges(bill, request.BillFormModel.ExtraCharges);
-            RemoveBillItems(bill, request.BillFormModel.BillItems);
+            // RemoveBillItems(bill, request.BillFormModel.BillItems);
             RemoveParticipants(bill, request.BillFormModel.Participants);
 
             bill.Remarks = request.BillFormModel.Remarks;
-            bill.Update(request.BillFormModel.EstablishmentName,
-                request.BillFormModel.BillDate,
-                request.BillFormModel.BillItems.Select(item =>
-                {
-                    var billItem = bill.BillItems.Find(bi => bi.Id == item.Id);
-                    if (billItem is object)
-                    {
-                        billItem.Update(item.Description, item.Amount, item.Discount);
-                        return billItem;
-                    }
-                    return new BillItem(item.Description, item.Amount, item.Discount);
-                }).ToList(),
-                request.BillFormModel.ExtraCharges.Select(item =>
-                {
-                    var extraCharge = bill.ExtraCharges.Find(ec => ec.Id == item.Id);
-                    if (extraCharge is object)
-                    {
-                        extraCharge.Update(item.Description, item.Rate);
-                        return extraCharge;
-                    }
-                    return new ExtraCharge(item.Description, item.Rate);
-                }).ToList());
+            //bill.Update(request.BillFormModel.EstablishmentName,
+            //    request.BillFormModel.BillDate,
+            //    request.BillFormModel.BillItems.Select(item =>
+            //    {
+            //        var billItem = bill.BillItems.Find(bi => bi.Id == item.Id);
+            //        if (billItem is object)
+            //        {
+            //            billItem.Update(item.Description, item.Amount, item.Discount);
+            //            return billItem;
+            //        }
+            //        return new BillItem(item.Description, item.Amount, item.Discount);
+            //    }).ToList(),
+            //    request.BillFormModel.ExtraCharges.Select(item =>
+            //    {
+            //        var extraCharge = bill.ExtraCharges.Find(ec => ec.Id == item.Id);
+            //        if (extraCharge is object)
+            //        {
+            //            extraCharge.Update(item.Description, item.Rate);
+            //            return extraCharge;
+            //        }
+            //        return new ExtraCharge(item.Description, item.Rate);
+            //    }).ToList());
             bill.UpdateParticipants(request.BillFormModel.Participants.Select(p =>
             {
                 var billParticipant = bill.Participants.Find(bp => bp.Id == p.Id);

@@ -12,4 +12,10 @@ namespace SplitThatBill.Backend.Business.Dtos
         public PersonFormModel Person { get; set; }
         public List<BillItemFormModel> BillItems { get; set; }
     }
+
+    public class BillItemAssignmentFormModel
+    {
+        public int PersonId { get; set; }
+        public BillItemFormModel BillItem { get; set; }
+    }
 }

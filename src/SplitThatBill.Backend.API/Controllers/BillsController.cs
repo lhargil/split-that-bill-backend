@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
 using SplitThatBill.Backend.Business.Requests.Billings;
+using SplitThatBill.Backend.Business.Requests.Bills;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

@@ -18,10 +18,10 @@ namespace SplitThatBill.Backend.Core.Entities
         public List<PersonBillItem> PersonBillItems { get; private set; }
         private BillItem()
         {
-
+            PersonBillItems = new List<PersonBillItem>();
         }
 
-        public BillItem(string description, decimal unitPrice)
+        public BillItem(string description, decimal unitPrice) : this()
         {
             Description = description;
             UnitPrice = unitPrice;
@@ -30,6 +30,11 @@ namespace SplitThatBill.Backend.Core.Entities
         public BillItem(string description, decimal unitPrice, decimal? discountRate) : this(description, unitPrice)
         {
             DiscountRate = discountRate;
+        }
+
+        public void AssignPerson(int personId, decimal payableUnitPrice)
+        {
+            PersonBillItems.Add(new PersonBillItem(personId, this, payableUnitPrice));
         }
 
         public decimal GetTotalPayablePerItem()
