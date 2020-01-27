@@ -36,7 +36,11 @@ namespace SplitThatBill.Backend.Business.Handlers.Bills
             var billItems = request.BillFormModel.BillItems.Select(item =>
             {
                 var billItem = new BillItem(item.BillItem.Description, item.BillItem.Amount);
-                billItem.AssignPerson(item.PersonId, item.BillItem.Amount);
+
+                if (item.PersonId > 0)
+                {
+                    billItem.AssignPerson(item.PersonId, item.BillItem.Amount);
+                }
                 return billItem;
             }).ToList();
 
