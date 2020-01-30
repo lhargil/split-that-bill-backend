@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SplitThatBill.Backend.Business.Dtos;
 using SplitThatBill.Backend.Business.Requests;
 using SplitThatBill.Backend.Business.Requests.Billings;
 using SplitThatBill.Backend.Business.Requests.Bills;
+using SplitThatBill.Backend.Core.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,13 +24,32 @@ namespace SplitThatBill.Backend.API.Controllers
         {
             _mediator = mediator;
         }
+
         // GET: api/values
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult<List<BillDto>>> Get()
         {
             var bills = await _mediator.Send(new GetBillsRequest());
             return Ok(bills);
+        }
+
+        [HttpGet("{guid}")]
+        public async Task<ActionResult<BillDto>> GetByGuid(string guid)
+        {
+            try
+            {
+                var bill = await _mediator.Send(new GetSingleBillByGuidRequest(guid));
+                return Ok(bill);
+            }
+            catch (NullReferenceException nullRefException)
+            {
+                return NotFound(nullRefException.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id}")]

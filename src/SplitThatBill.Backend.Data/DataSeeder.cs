@@ -11,11 +11,13 @@ namespace SplitThatBill.Backend.Data
     {
         private readonly SplitThatBillContext _splitThatBillContext;
         private readonly IDateTimeManager _dateTimeManager;
+        private readonly IExternalIdGenerator _externalIdGenerator;
 
-        public DataSeeder(SplitThatBillContext splitThatBillContext, IDateTimeManager dateTimeManager)
+        public DataSeeder(SplitThatBillContext splitThatBillContext, IDateTimeManager dateTimeManager, IExternalIdGenerator externalIdGenerator)
         {
             _splitThatBillContext = splitThatBillContext;
             _dateTimeManager = dateTimeManager;
+            _externalIdGenerator = externalIdGenerator;
         }
 
         public void Seed()
@@ -43,6 +45,7 @@ namespace SplitThatBill.Backend.Data
                         billItem1,
                         billITem2
                     });
+                bill.SetExternalId(_externalIdGenerator.Generate());
                 bill.AddParticipant(person3);
                 bill.AddParticipant(person2);
                 bill.AddParticipant(person1);
@@ -64,6 +67,7 @@ namespace SplitThatBill.Backend.Data
                         billItem3,
                         billItem4
                     });
+                bill2.SetExternalId(_externalIdGenerator.Generate());
                 bill2.AddParticipant(person1);
                 bill2.AddParticipant(person2);
 

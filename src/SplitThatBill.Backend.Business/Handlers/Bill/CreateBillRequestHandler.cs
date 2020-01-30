@@ -18,20 +18,24 @@ namespace SplitThatBill.Backend.Business.Handlers.Bills
         private readonly SplitThatBillContext _splitThatBillContext;
         private readonly IMapper _mapper;
         private readonly IContextData _contextData;
+        private readonly IExternalIdGenerator _externalIdGenerator;
 
         public CreateBillRequestHandler(SplitThatBillContext splitThatBillContext,
             IMapper mapper,
-            IContextData contextData)
+            IContextData contextData,
+            IExternalIdGenerator externalIdGenerator)
         {
             _splitThatBillContext = splitThatBillContext;
             _mapper = mapper;
             _contextData = contextData;
+            _externalIdGenerator = externalIdGenerator;
         }
 
         public async Task<BillDto> Handle(CreateBillRequest request, CancellationToken cancellationToken)
         {
             var billToCreate = new Bill(request.BillFormModel.EstablishmentName, request.BillFormModel.BillDate, null);
             billToCreate.Remarks = request.BillFormModel.Remarks;
+            billToCreate.SetExternalId(_externalIdGenerator.Generate());
 
             var billItems = request.BillFormModel.BillItems.Select(item =>
             {

@@ -28,6 +28,7 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using SplitThatBill.Backend.SharedKernel.Models;
+using SplitThatBill.Backend.SharedKernel;
 
 namespace SplitThatBill.Backend.API
 {
@@ -141,6 +142,7 @@ namespace SplitThatBill.Backend.API
             services.AddMediatR(businessAssembly);
             services.AddAutoMapper(businessAssembly);
             services.AddTransient<IDateTimeManager, DateTimeManager>();
+            services.AddTransient<IExternalIdGenerator, GuidExternalIdGenerator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

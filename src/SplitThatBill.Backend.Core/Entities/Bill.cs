@@ -17,6 +17,7 @@ namespace SplitThatBill.Backend.Core.Entities
         public List<BillParticipant> Participants { get; private set; }
         public int? BillTakerId { get; private set; }
         public Person BillTaker { get; private set; }
+        public string ExternalId { get; private set; }
 
         private Bill()
         {
@@ -34,6 +35,11 @@ namespace SplitThatBill.Backend.Core.Entities
         public Bill(string establishmentName, DateTime billDate, List<BillItem> billItems) : this(establishmentName, billDate)
         {
             BillItems = billItems;
+        }
+
+        public void SetExternalId(string externalId)
+        {
+            ExternalId = externalId;
         }
 
         public void SetExtraCharges(List<ExtraCharge> extraCharges)

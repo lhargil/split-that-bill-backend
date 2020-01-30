@@ -40,4 +40,32 @@ namespace SplitThatBill.Backend.Business.Handlers.Bills
             return Task.FromResult(_mapper.Map<BillDto>(bill));
         }
     }
+
+    public class GetSingleBillByGuidRequestHandler : IRequestHandler<GetSingleBillByGuidRequest, BillDto>
+    {
+        private SplitThatBillContext _splitThatBillContext;
+        private IMapper _mapper;
+
+        public GetSingleBillByGuidRequestHandler(SplitThatBillContext splitThatBillContext, IMapper mapper)
+        {
+            _splitThatBillContext = splitThatBillContext;
+            _mapper = mapper;
+        }
+        public Task<BillDto> Handle(GetSingleBillByGuidRequest request, CancellationToken cancellationToken)
+        {
+            var bill = _splitThatBillContext.Bills
+                .Include(i => i.BillItems)
+                .Include(i => i.Participants)
+                    .ThenInclude(j => j.Person)
+                        .ThenInclude(p => p.PersonBillItems)
+                .FirstOrDefault(item => item.ExternalId == request.Guid);
+
+            if (null == bill)
+            {
+                throw new NullReferenceException("The bill requested was not found.");
+            }
+
+            return Task.FromResult(_mapper.Map<BillDto>(bill));
+        }
+    }
 }

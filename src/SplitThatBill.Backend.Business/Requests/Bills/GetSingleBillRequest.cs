@@ -12,4 +12,14 @@ namespace SplitThatBill.Backend.Business.Requests.Bills
 
         public int BillId { get; }
     }
+
+    public class GetSingleBillByGuidRequest : IRequest<BillDto>
+    {
+        public GetSingleBillByGuidRequest(string guid)
+        {
+            Guid = guid;
+        }
+
+        public string Guid { get; }
+    }
 }

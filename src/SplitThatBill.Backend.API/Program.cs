@@ -30,8 +30,9 @@ namespace SplitThatBill.Backend.API
                     splitThatBillContext.Database.EnsureCreated();
 
                     var dateTimeManager = services.GetRequiredService<IDateTimeManager>();
+                    var externalIdGenerator = services.GetRequiredService<IExternalIdGenerator>();
 
-                    var dataSeeder = new DataSeeder(splitThatBillContext, dateTimeManager);
+                    var dataSeeder = new DataSeeder(splitThatBillContext, dateTimeManager, externalIdGenerator);
                     dataSeeder.Seed();
                 }
                 catch (Exception ex)
