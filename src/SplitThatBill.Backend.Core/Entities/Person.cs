@@ -11,6 +11,7 @@ namespace SplitThatBill.Backend.Core.Entities
         public string Firstname { get; private set; }
         public string Lastname { get; private set; }
         public string Fullname { get => $"{Firstname} {Lastname}"; }
+        public string ExternalId { get; private set; }
         public List<PersonBillItem> PersonBillItems { get; private set; }
         public List<PaymentDetail> PaymentDetails { get; private set; }
         public List<BillParticipant> Bills { get; private set; }
@@ -35,6 +36,10 @@ namespace SplitThatBill.Backend.Core.Entities
         {
             Firstname = firstname;
             Lastname = lastname;
+        }
+        public void SetExternalId(string externalId)
+        {
+            ExternalId = externalId;
         }
         public decimal GetTotalPayable()
         {

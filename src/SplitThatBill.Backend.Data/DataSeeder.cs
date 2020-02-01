@@ -23,10 +23,13 @@ namespace SplitThatBill.Backend.Data
         public void Seed()
         {
             var person1 = new Person("lhar", "gil");
+            person1.SetExternalId(_externalIdGenerator.Generate());
             person1.AddPaymentDetail(PaymentDetail.Create("Maybank", "34532156778", "Lhar Gil"));
 
             var person2 = new Person("jon", "snow");
+            person2.SetExternalId(_externalIdGenerator.Generate());
             var person3 = new Person("raffy", "tulfo");
+            person3.SetExternalId(_externalIdGenerator.Generate());
 
             if (!_splitThatBillContext.People.Any())
             {
