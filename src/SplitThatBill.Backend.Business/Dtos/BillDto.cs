@@ -18,5 +18,6 @@ namespace SplitThatBill.Backend.Business.Dtos
         public decimal BillTotalWithoutCharges { get; set; }
         public decimal TotalCharges { get; set; }
         public List<PersonBillItemDto> PersonBillItems { get; set; }
+        public string Currency { get; set; }
     }
 }

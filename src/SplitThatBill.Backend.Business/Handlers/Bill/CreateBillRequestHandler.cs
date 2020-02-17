@@ -33,10 +33,6 @@ namespace SplitThatBill.Backend.Business.Handlers.Bills
 
         public async Task<BillDto> Handle(CreateBillRequest request, CancellationToken cancellationToken)
         {
-            var billToCreate = new Bill(request.BillFormModel.EstablishmentName, request.BillFormModel.BillDate, null);
-            billToCreate.Remarks = request.BillFormModel.Remarks;
-            billToCreate.SetExternalId(_externalIdGenerator.Generate());
-
             var billItems = request.BillFormModel.BillItems.Select(item =>
             {
                 var billItem = new BillItem(item.BillItem.Description, item.BillItem.Amount);
@@ -47,6 +43,10 @@ namespace SplitThatBill.Backend.Business.Handlers.Bills
                 }
                 return billItem;
             }).ToList();
+            var billToCreate = new Bill(request.BillFormModel.EstablishmentName, request.BillFormModel.BillDate, billItems, request.BillFormModel.Currency);
+            billToCreate.Remarks = request.BillFormModel.Remarks;
+            billToCreate.SetExternalId(_externalIdGenerator.Generate());
+
 
             billToCreate.SetBillItems(billItems);
             billToCreate.SetExtraCharges(request.BillFormModel.ExtraCharges.Select(item => new Core.OwnedEntities.ExtraCharge(item.Description, item.Rate)).ToList());

@@ -47,7 +47,7 @@ namespace SplitThatBill.Backend.Data
                     new List<BillItem> {
                         billItem1,
                         billITem2
-                    });
+                    }, "MYR");
                 bill.SetExternalId(_externalIdGenerator.Generate());
                 bill.AddParticipant(person3);
                 bill.AddParticipant(person2);
@@ -69,7 +69,7 @@ namespace SplitThatBill.Backend.Data
                     new List<BillItem> {
                         billItem3,
                         billItem4
-                    });
+                    }, "MYR");
                 bill2.SetExternalId(_externalIdGenerator.Generate());
                 bill2.AddParticipant(person1);
                 bill2.AddParticipant(person2);
