@@ -25,6 +25,7 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />

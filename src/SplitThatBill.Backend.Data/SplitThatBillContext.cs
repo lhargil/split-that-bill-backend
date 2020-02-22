@@ -32,11 +32,17 @@ namespace SplitThatBill.Backend.Data
             modelBuilder.ApplyConfiguration(new PersonBillItemConfiguration());
             modelBuilder.ApplyConfiguration(new PersonConfiguration());
 
+            modelBuilder.Entity<Currency>(eb =>
+            {
+                eb.ToTable("Currencies");
+            });
+
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Person> People { get; set; }
+        public DbSet<Currency> Currencies { get; set; }
 
         public override int SaveChanges()
         {
