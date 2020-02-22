@@ -50,7 +50,8 @@ namespace SplitThatBill.Backend.Business.Aggregates
                 ExtraCharges = bill.ExtraCharges.Select(ec => mapper.Map<ExtraChargeDto>(ec)).ToList(),
                 BillTotal = bill.GetBillTotal(),
                 BillTotalWithoutCharges = bill.GetBillTotalWithoutCharges(),
-                TotalCharges = bill.GetTotalChargeRates()
+                TotalCharges = bill.GetTotalChargeRates(),
+                Currency = bill.Currency
             };
         }
 
