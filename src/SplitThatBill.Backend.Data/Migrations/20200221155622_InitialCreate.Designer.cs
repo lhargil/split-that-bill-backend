@@ -9,8 +9,8 @@ using SplitThatBill.Backend.Data;
 namespace SplitThatBill.Backend.Data.Migrations
 {
     [DbContext(typeof(SplitThatBillContext))]
-    [Migration("20200217231409_AddBillCurrency")]
-    partial class AddBillCurrency
+    [Migration("20200221155622_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -21,6 +21,8 @@
         <ProjectReference Include="..\SplitThatBill.Backend.Core\SplitThatBill.Backend.Core.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <Folder Include="Migrations\" />
+        <None Update="Scripts\StoredProcedures\1.Add_Currencies.sql">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 </Project>

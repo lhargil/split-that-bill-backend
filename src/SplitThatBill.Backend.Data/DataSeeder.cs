@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using SplitThatBill.Backend.Core.Entities;
 using SplitThatBill.Backend.Core.Interfaces;
 using SplitThatBill.Backend.Core.OwnedEntities;
@@ -22,6 +23,7 @@ namespace SplitThatBill.Backend.Data
 
         public void Seed()
         {
+            _splitThatBillContext.Database.ExecuteSqlRaw("CALL Add_Currencies");
             var person1 = new Person("lhar", "gil");
             person1.SetExternalId(_externalIdGenerator.Generate());
             person1.AddPaymentDetail(PaymentDetail.Create("Maybank", "34532156778", "Lhar Gil"));

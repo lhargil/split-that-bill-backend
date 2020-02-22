@@ -9,8 +9,8 @@ using SplitThatBill.Backend.Data;
 namespace SplitThatBill.Backend.Data.Migrations
 {
     [DbContext(typeof(SplitThatBillContext))]
-    [Migration("20200127233607_AddExternalIdToBill")]
-    partial class AddExternalIdToBill
+    [Migration("20200221155739_AddCurrencies")]
+    partial class AddCurrencies
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,9 @@ namespace SplitThatBill.Backend.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Currency")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<DateTime>("DateCreated")
@@ -151,6 +154,9 @@ namespace SplitThatBill.Backend.Data.Migrations
 
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("ExternalId")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Firstname")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
