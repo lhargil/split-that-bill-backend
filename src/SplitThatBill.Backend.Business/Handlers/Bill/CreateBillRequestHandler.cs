@@ -35,7 +35,7 @@ namespace SplitThatBill.Backend.Business.Handlers.Bills
         {
             var billItems = request.BillFormModel.BillItems.Select(item =>
             {
-                var billItem = new BillItem(item.BillItem.Description, item.BillItem.Amount);
+                var billItem = new BillItem(item.BillItem.Description, item.BillItem.Amount, item.BillItem.Discount);
 
                 if (item.PersonId > 0)
                 {
