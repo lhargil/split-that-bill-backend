@@ -40,5 +40,6 @@
         <Folder Include="Models\" />
         <Folder Include="Middlewares\" />
         <Folder Include="Extensions\" />
+        <Folder Include="wwwroot\" />
     </ItemGroup>
 </Project>

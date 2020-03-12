@@ -64,6 +64,15 @@ namespace SplitThatBill.Backend.API
                         .AllowAnyMethod()
                         .WithExposedHeaders(new[] { "Location" });
                 });
+
+                options.AddPolicy("OnlyIdentifiedOrigin", builder =>
+                {
+                    builder
+                        .WithOrigins(Configuration["CORSOrigin"])
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithExposedHeaders(new[] { "Location" });
+                });
             });
 
             services.AddRouting(opts => opts.LowercaseUrls = true);
@@ -167,18 +176,32 @@ namespace SplitThatBill.Backend.API
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseCors("AllowAll");
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors("AllowAll");
+            }
+            else
+            {
+                app.UseCors("OnlyIdentifiedOrigin");
+            }
+
+            app.UseFileServer();
             app.UseRequestContextDataMiddleware();
             app.UseMvc();
-            app.UseOpenApi(config =>
+
+            if (Convert.ToBoolean(Configuration["CanSwag"]))
             {
-                config.PostProcess = (document, ctxt) =>
+                app.UseOpenApi(config =>
                 {
-                    document.Schemes.Clear();
-                    document.Schemes.Add(NSwag.OpenApiSchema.Https);
-                };
-            });
-            app.UseSwaggerUi3();
+                    config.PostProcess = (document, ctxt) =>
+                    {
+                        document.Schemes.Clear();
+                        document.Schemes.Add(NSwag.OpenApiSchema.Https);
+                    };
+                });
+                app.UseSwaggerUi3();
+            }
         }
     }
 }
