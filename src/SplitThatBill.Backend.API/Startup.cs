@@ -68,7 +68,7 @@ namespace SplitThatBill.Backend.API
                 options.AddPolicy("OnlyIdentifiedOrigin", builder =>
                 {
                     builder
-                        .WithOrigins(Configuration["CORSOrigin"])
+                        .WithOrigins(Configuration.GetValue<string>("CORSOrigin"))
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .WithExposedHeaders(new[] { "Location" });
@@ -167,15 +167,18 @@ namespace SplitThatBill.Backend.API
                 app.UseHsts();
             }
 
+
+
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
-
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseFileServer();
+            app.UseRequestContextDataMiddleware();
 
             if (env.IsDevelopment())
             {
@@ -186,11 +189,9 @@ namespace SplitThatBill.Backend.API
                 app.UseCors("OnlyIdentifiedOrigin");
             }
 
-            app.UseFileServer();
-            app.UseRequestContextDataMiddleware();
             app.UseMvc();
 
-            if (Convert.ToBoolean(Configuration["CanSwag"]))
+            if (Convert.ToBoolean(Configuration.GetValue<string>("CanSwag")))
             {
                 app.UseOpenApi(config =>
                 {
