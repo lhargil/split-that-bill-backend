@@ -1,14 +1,13 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="ValueObjects\" />
-    <Folder Include="OwnedEntities\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="NodaTime" Version="2.4.7" />
-  </ItemGroup>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <Folder Include="ValueObjects\" />
+        <Folder Include="OwnedEntities\" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="NodaTime" Version="2.4.7" />
+    </ItemGroup>
 </Project>
