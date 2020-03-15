@@ -111,7 +111,7 @@ namespace SplitThatBill.Backend.API
 
             var businessAssembly = Assembly.Load("SplitThatBill.Backend.Business");
             services
-                .AddMvc(options =>
+                .AddControllers(options =>
                 {
                     options.EnableEndpointRouting = false;
                 })
@@ -175,9 +175,10 @@ namespace SplitThatBill.Backend.API
             });
 
             app.UseHttpsRedirection();
+            app.UseFileServer();
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseFileServer();
             app.UseRequestContextDataMiddleware();
 
             if (env.IsDevelopment())
@@ -189,7 +190,10 @@ namespace SplitThatBill.Backend.API
                 app.UseCors("OnlyIdentifiedOrigin");
             }
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
             if (Convert.ToBoolean(Configuration.GetValue<string>("CanSwag")))
             {
